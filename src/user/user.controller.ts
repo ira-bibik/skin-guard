@@ -1,34 +1,51 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Request,
+	Body,
+	Param,
+	Delete,
+	UsePipes,
+	ValidationPipe,
+	UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+	constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
+	@Post('/login')
+	@UseGuards(LocalAuthGuard)
+	async login(@Request() req) {
+		return this.userService.login(req.user);
+	}
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
+	@Post('/register')
+	@UsePipes(new ValidationPipe())
+	create(@Body() createUserDto: CreateUserDto) {
+		return this.userService.create(createUserDto);
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
+	//profile(getMe) it's not neccessary
+	@UseGuards(JwtAuthGuard)
+	@Get('profile')
+	getProfile(@Request() req) {
+		return req.user;
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
+	@Get()
+	findAll() {
+		return this.userService.findAll();
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
+	// rolesGuard for admin
+	@Delete(':id')
+	remove(@Param('id') userId: string) {
+		return this.userService.remove(+userId);
+	}
 }

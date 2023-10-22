@@ -18,9 +18,9 @@ export class Patient {
 	@PrimaryGeneratedColumn({ name: 'patient_id' })
 	patientId: number;
 
-	@OneToOne(() => User)
+	@OneToOne(() => User, {onDelete: 'CASCADE'})
 	@JoinColumn({ name: 'user_id' })
-	userId: User;
+	user: User;
 
 	@Column({ nullable: true })
 	name: string;

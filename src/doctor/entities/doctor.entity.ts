@@ -15,11 +15,11 @@ import {
 @Entity()
 export class Doctor {
 	@PrimaryGeneratedColumn({ name: 'doctor_id' })
-	doctorIs: number;
+	doctorId: number;
 
-	@OneToOne(() => User)
+	@OneToOne(() => User, { onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'user_id' })
-	userId: User;
+	user: User;
 
 	@Column({ nullable: true })
 	name: string;
