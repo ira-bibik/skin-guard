@@ -22,8 +22,11 @@ export class ProductService {
 		return await this.productRepository.save(createProductDto);
 	}
 
-	async findAll() {
-		return await this.productRepository.find();
+	async findAll(limit, page) {
+		return await this.productRepository.find({
+			take: limit,
+			skip: (page - 1) * limit,
+		});
 	}
 
 	async findOne(id: number) {
