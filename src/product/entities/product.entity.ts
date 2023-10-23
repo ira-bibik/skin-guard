@@ -15,14 +15,17 @@ export class Product {
 	@Column()
 	brand: string;
 
+	@Column()
+	ingredients: string;
+
 	@Column('simple-array')
-	ingredients: string[];
+	skinType: string[];
 
-	@Column()
-	skinType: string;
-
-	@Column()
+	@Column({ nullable: true })
 	description: string;
+
+	@Column()
+	amount: string;
 
 	@OneToMany(() => Schedule, (schedule) => schedule.patient)
 	schedule: Schedule[];

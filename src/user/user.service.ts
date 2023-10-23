@@ -59,7 +59,7 @@ export class UserService {
 	}
 
 	async login(user: IUser) {
-    const { userId, email, role } = user;
+		const { userId, email, role } = user;
 		let idByRole: number;
 		if (role === 'patient') {
 			let patient = await this.patientService.findOneByUserId(+userId);
@@ -106,6 +106,7 @@ export class UserService {
 	async remove(userId: number) {
 		const user = await this.usersRepository.findOne({ where: { userId } });
 		if (!user) throw new NotFoundException('User is not found');
-		return await this.usersRepository.delete(userId);
+		await this.usersRepository.delete(userId);
+		return { message: 'User was succesfully deleted' };
 	}
 }

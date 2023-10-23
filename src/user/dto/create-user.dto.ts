@@ -4,15 +4,15 @@ import { UserRole } from "../entities/user.entity";
 export class CreateUserDto {
 	@IsNotEmpty()
 	@IsEmail()
-	email: string;
+	readonly email: string;
 
 	@IsNotEmpty()
 	@IsString()
-	password: string;
+	readonly password: string;
 
 	@IsNotEmpty()
 	@IsIn(['admin', 'patient', 'doctor'], {
 		message: 'The role value must be one of admin, patient, or doctor',
 	})
-	role: UserRole;
+	readonly role: UserRole;
 }

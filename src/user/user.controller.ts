@@ -14,6 +14,8 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { Roles } from 'src/decorator/roles.decorator';
+import { RolesGuard } from './guards/roles.guard';
 
 @Controller('user')
 export class UserController {
@@ -39,12 +41,15 @@ export class UserController {
 	}
 
 	@Get()
+	@Roles('admin')
+	@UseGuards(RolesGuard)
 	findAll() {
 		return this.userService.findAll();
 	}
 
-	// rolesGuard for admin
 	@Delete(':id')
+	@Roles('admin')
+	@UseGuards(RolesGuard)
 	remove(@Param('id') userId: string) {
 		return this.userService.remove(+userId);
 	}
