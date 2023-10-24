@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Patient } from './entities/patient.entity';
@@ -17,25 +17,58 @@ export class PatientService {
 		return newPatient;
 	}
 
-	async findAll() {
+	async findAll(page, limit) {
 		const patients = await this.patientRepository.find({
 			relations: { user: true },
+			take: limit,
+			skip: (page - 1) * limit,
+		});
+		return { patients };
+	}
+
+	async findPatientsByDoctorId(doctorId, page, limit) {
+		const patients = await this.patientRepository.find({
+			where: { doctor: { doctorId } },
+			take: limit,
+			skip: (page - 1) * limit,
 		});
 		return { patients };
 	}
 
 	async findOneByUserId(id: number) {
-		const user = await this.patientRepository.findOne({
+		const patient = await this.patientRepository.findOne({
 			where: { user: { userId: id } },
 		});
-		return user;
+		if (!patient) throw new NotFoundException("This patient doesn't exist");
+		return patient;
 	}
 
-	update(id: number, updatePatientDto: UpdatePatientDto) {
-		return `This action updates a #${id} patient`;
+	async findOneByPatientId(id: number) {
+		const patient = await this.patientRepository.findOne({
+			where: { patientId: id },
+		});
+		if (!patient) throw new NotFoundException("This patient doesn't exist");
+		return patient;
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} patient`;
+	async update(id: number, dto: UpdatePatientDto) {
+		const patient = await this.patientRepository.findOne({
+			where: { patientId: id },
+		});
+		if (!patient) throw new NotFoundException("This patient doesn't exist");
+		await this.patientRepository.update(id, dto);
+		return { message: 'Patient was succesfully updated' };
+	}
+
+	//UPDATEdOCTOR??(will do when doctor-request logic)
+	async updateDoctor(patientId, doctorId) {
+		const patient = await this.patientRepository.findOne({
+			where: { patientId },
+		});
+		if (!patient) throw new NotFoundException("This patient doesn't exist");
+		await this.patientRepository.update(patientId, {
+			doctor: { doctorId },
+		});
+		return { message: 'Doctor was succesfully updated' };
 	}
 }

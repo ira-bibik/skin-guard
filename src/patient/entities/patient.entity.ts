@@ -18,7 +18,7 @@ export class Patient {
 	@PrimaryGeneratedColumn({ name: 'patient_id' })
 	patientId: number;
 
-	@OneToOne(() => User, {onDelete: 'CASCADE'})
+	@OneToOne(() => User, { onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'user_id' })
 	user: User;
 
@@ -26,7 +26,7 @@ export class Patient {
 	name: string;
 
 	@Column({ nullable: true })
-	age: string;
+	age: number;
 
 	@Column({ nullable: true })
 	skinType: string;

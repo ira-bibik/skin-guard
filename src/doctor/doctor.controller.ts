@@ -4,15 +4,19 @@ import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
 import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from 'src/user/guards/roles.guard';
+import { PatientService } from 'src/patient/patient.service';
 
 @Controller('doctor')
 export class DoctorController {
-	constructor(private readonly doctorService: DoctorService) {}
+	constructor(
+		private readonly doctorService: DoctorService,
+		private readonly patientService: PatientService
+	) {}
 
 	@Get()
 	findAll(
 		@Query('page') page: number = 1,
-		@Query('limit') limit: number = 3
+		@Query('limit') limit: number = 9
 	) {
 		return this.doctorService.findAll(+page, +limit);
 	}
@@ -22,6 +26,21 @@ export class DoctorController {
 	@UseGuards(RolesGuard)
 	getMe(@Request() req) {
 		return this.doctorService.findOneByDoctorId(req.user.idByRole);
+	}
+
+	@Get('patients')
+	@Roles('doctor')
+	@UseGuards(RolesGuard)
+	findPatientsByDoctorId(
+		@Request() req,
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 9
+	) {
+		return this.patientService.findPatientsByDoctorId(
+			req.user.idByRole,
+			+page,
+			+limit
+		);
 	}
 
 	@Get('users/:userId')

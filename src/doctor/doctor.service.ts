@@ -19,7 +19,7 @@ export class DoctorService {
 
 	async findAll(page, limit) {
 		const patients = await this.doctorRepository.find({
-			relations: { user: true, patients: true },
+			relations: { patients: true },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
@@ -29,7 +29,7 @@ export class DoctorService {
 	async findOneByUserId(id: number) {
 		const user = await this.doctorRepository.findOne({
 			where: { user: { userId: id } },
-			relations: { user: true, patients: true },
+			relations: { patients: true },
 		});
 		if (!user) throw new NotFoundException("This doctor doesn't exist");
 		return user;
@@ -38,14 +38,18 @@ export class DoctorService {
 	async findOneByDoctorId(id: number) {
 		const doctor = await this.doctorRepository.findOne({
 			where: { doctorId: id },
-			relations: { user: true, patients: true },
+			relations: { patients: true },
 		});
 		if (!doctor) throw new NotFoundException("This doctor doesn't exist");
 		return doctor;
 	}
 
 	async update(id: number, dto: UpdateDoctorDto) {
+		const doctor = await this.doctorRepository.findOne({
+			where: { doctorId: id }
+		});
+		if (!doctor) throw new NotFoundException("This doctor doesn't exist");
 		await this.doctorRepository.update(id, dto);
-		return { message: 'Product was succesfully updated' };
+		return { message: 'Doctor was succesfully updated' };
 	}
 }
