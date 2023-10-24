@@ -33,11 +33,11 @@ export class Doctor {
 	@Column({ nullable: true })
 	description: string;
 
-	@CreateDateColumn()
-	createAt: Date;
+	// @CreateDateColumn()
+	// createAt: Date;
 
-	@UpdateDateColumn()
-	updateAt: Date;
+	// @UpdateDateColumn()
+	// updateAt: Date;
 
 	@OneToMany(() => Patient, (patient) => patient.doctor)
 	patients: Patient[];

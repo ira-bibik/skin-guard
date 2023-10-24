@@ -9,7 +9,7 @@ import {
 	UsePipes,
 	ValidationPipe,
 	UseGuards,
-  Query,
+	Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -39,16 +39,33 @@ export class ProductController {
 		return this.productService.findAll(+page, +limit);
 	}
 
+	@Get('filter')
+	@UseGuards(JwtAuthGuard)
+	filter(
+		@Query()
+		filters: {
+			brands?: string;
+			productTypes?: string;
+			skinTypes?: string;
+		}
+	) {
+		const brands = filters.brands ? filters.brands.split(',') : [];
+		const productTypes = filters.productTypes
+			? filters.productTypes.split(',')
+      : [];
+    const skinTypes = filters.skinTypes ? filters.skinTypes.split(',') : [];
+    
+		return this.productService.filterProducts({
+			brands: brands,
+			productTypes: productTypes,
+			skinTypes: skinTypes,
+		});
+	}
+
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.productService.findOne(+id);
 	}
-
-	// @Get()
-	// @UseGuards(JwtAuthGuard)
-	// filter() {
-
-	// }
 
 	@Patch(':id')
 	@Roles('admin')

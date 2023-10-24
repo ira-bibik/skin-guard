@@ -22,7 +22,7 @@ export class ProductService {
 		return await this.productRepository.save(createProductDto);
 	}
 
-	async findAll(limit, page) {
+	async findAll(page, limit) {
 		return await this.productRepository.find({
 			take: limit,
 			skip: (page - 1) * limit,
@@ -44,6 +44,39 @@ export class ProductService {
 		await this.findOneById(id);
 		await this.productRepository.delete(id);
 		return { message: 'Product was succesfully deleted' };
+	}
+
+	async filterProducts(filters: {
+		brands?: string[];
+		productTypes?: string[];
+		skinTypes?: string[];
+	}) {
+		const query = this.productRepository.createQueryBuilder('product');
+
+		if (filters.brands && filters.brands.length > 0) {
+			query.andWhere('product.brand IN (:...brands)', {
+				brands: filters.brands,
+			});
+		}
+
+		if (filters.productTypes && filters.productTypes.length > 0) {
+			query.andWhere('product.productType IN (:...productTypes)', {
+				productTypes: filters.productTypes,
+			});
+		}
+
+    if (filters.skinTypes && filters.skinTypes.length > 0) {
+      // тут помилка
+			query.andWhere(
+				'ARRAY[:...skinTypes]::text[] && product.skinType',
+				{
+					skinTypes: filters.skinTypes,
+				}
+      );
+      //
+		}
+
+		return query.getMany();
 	}
 
 	async findOneByName(name: string) {

@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { CreateDoctorDto } from './dto/create-doctor.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from './entities/doctor.entity';
@@ -12,14 +11,17 @@ export class DoctorService {
 		@InjectRepository(Doctor)
 		private doctorRepository: Repository<Doctor>
 	) {}
+
 	async create(user: User) {
 		const newPatient = await this.doctorRepository.save({ user });
 		return newPatient;
 	}
 
-	async findAll() {
+	async findAll(page, limit) {
 		const patients = await this.doctorRepository.find({
-			relations: { user: true },
+			relations: { user: true, patients: true },
+			take: limit,
+			skip: (page - 1) * limit,
 		});
 		return { patients };
 	}
@@ -27,15 +29,23 @@ export class DoctorService {
 	async findOneByUserId(id: number) {
 		const user = await this.doctorRepository.findOne({
 			where: { user: { userId: id } },
+			relations: { user: true, patients: true },
 		});
+		if (!user) throw new NotFoundException("This doctor doesn't exist");
 		return user;
 	}
 
-	update(id: number, updateDoctorDto: UpdateDoctorDto) {
-		return `This action updates a #${id} doctor`;
+	async findOneByDoctorId(id: number) {
+		const doctor = await this.doctorRepository.findOne({
+			where: { doctorId: id },
+			relations: { user: true, patients: true },
+		});
+		if (!doctor) throw new NotFoundException("This doctor doesn't exist");
+		return doctor;
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} doctor`;
+	async update(id: number, dto: UpdateDoctorDto) {
+		await this.doctorRepository.update(id, dto);
+		return { message: 'Product was succesfully updated' };
 	}
 }

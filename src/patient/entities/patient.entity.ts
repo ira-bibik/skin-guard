@@ -31,11 +31,11 @@ export class Patient {
 	@Column({ nullable: true })
 	skinType: string;
 
-	@CreateDateColumn()
-	createAt: Date;
+	// @CreateDateColumn()
+	// createAt: Date;
 
-	@UpdateDateColumn()
-	updateAt: Date;
+	// @UpdateDateColumn()
+	// updateAt: Date;
 
 	@ManyToOne(() => Doctor, (doctor) => doctor.patients, {
 		nullable: true,
