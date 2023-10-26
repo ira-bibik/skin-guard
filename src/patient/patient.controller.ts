@@ -8,8 +8,8 @@ import {
 	Delete,
 	Query,
 	UseGuards,
-  UsePipes,
-  ValidationPipe,
+	UsePipes,
+	ValidationPipe,
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { UpdatePatientDto } from './dto/update-patient.dto';
@@ -20,8 +20,10 @@ import { ScheduleService } from 'src/schedule/schedule.service';
 
 @Controller('patient')
 export class PatientController {
-	constructor(private readonly patientService: PatientService
-	, private readonly scheduleService: ScheduleService) { }
+	constructor(
+		private readonly patientService: PatientService,
+		private readonly scheduleService: ScheduleService
+	) {}
 
 	@Get()
 	findAll(
@@ -65,5 +67,13 @@ export class PatientController {
 	@UsePipes(new ValidationPipe())
 	update(@Request() req, @Body() updatePatientDto: UpdatePatientDto) {
 		return this.patientService.update(req.user.idByRole, updatePatientDto);
+	}
+
+	@Patch('/unsubmit')
+	@Roles('patient')
+	@UseGuards(RolesGuard)
+	@UsePipes(new ValidationPipe())
+	deleteDoctor(@Request() req) {
+		return this.patientService.deleteDoctor(req.user);
 	}
 }

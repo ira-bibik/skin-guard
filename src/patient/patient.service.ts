@@ -61,6 +61,7 @@ export class PatientService {
 	async findOne(patientId: number) {
 		const patient = await this.patientRepository.findOne({
 			where: { patientId },
+			relations: { doctor: true },
 		});
 		return patient;
 	}
@@ -87,12 +88,18 @@ export class PatientService {
 		return { message: 'Patient was succesfully updated' };
 	}
 
-	//UPDATEdOCTOR??(will do when doctor-request logic)
-	async updateDoctor(patientId, doctorId) {
-		const patient = await this.patientRepository.findOne({
-			where: { patientId },
+	async deleteDoctor(user: IUser) {
+		const patient = await this.findOne(+user.idByRole);
+		await this.patientRepository.update(patient.patientId, {
+			...patient,
+			doctor: null,
 		});
-		if (!patient) throw new NotFoundException("This patient doesn't exist");
+		return {
+			message: 'Doctor was succesfully deleted from patient profile',
+		};
+	}
+
+	async updateDoctor(patientId: number, doctorId: number) {
 		await this.patientRepository.update(patientId, {
 			doctor: { doctorId },
 		});

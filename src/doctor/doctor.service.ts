@@ -46,10 +46,18 @@ export class DoctorService {
 
 	async update(id: number, dto: UpdateDoctorDto) {
 		const doctor = await this.doctorRepository.findOne({
-			where: { doctorId: id }
+			where: { doctorId: id },
 		});
 		if (!doctor) throw new NotFoundException("This doctor doesn't exist");
 		await this.doctorRepository.update(id, dto);
 		return { message: 'Doctor was succesfully updated' };
+	}
+
+	async findOne(id: number) {
+		const doctor = await this.doctorRepository.findOne({
+			where: { doctorId: id },
+			relations: { patients: true },
+		});
+		return doctor;
 	}
 }

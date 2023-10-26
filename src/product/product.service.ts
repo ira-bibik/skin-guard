@@ -14,7 +14,8 @@ export class ProductService {
 	constructor(
 		@InjectRepository(Product)
 		private productRepository: Repository<Product>
-	) {}
+	) { }
+	
 	async create(createProductDto: CreateProductDto) {
 		const isExist = await this.findOneByName(createProductDto.name);
 		if (isExist)
