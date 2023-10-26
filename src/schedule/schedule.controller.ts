@@ -34,15 +34,20 @@ export class ScheduleController {
 	}
 
 	@Patch(':id')
+	@UseGuards(JwtAuthGuard)
+	@UsePipes(new ValidationPipe())
 	update(
 		@Param('id') id: string,
-		@Body() updateScheduleDto: UpdateScheduleDto
+		@Body() updateScheduleDto: UpdateScheduleDto,
+		@Request() req
 	) {
-		return this.scheduleService.update(+id, updateScheduleDto);
+		return this.scheduleService.update(+id, updateScheduleDto, req.user);
 	}
 
 	@Delete(':id')
-	remove(@Param('id') id: string) {
-		return this.scheduleService.remove(+id);
+	@Patch(':id')
+	@UseGuards(JwtAuthGuard)
+	remove(@Param('id') id: string, @Request() req) {
+		return this.scheduleService.remove(+id, req.user);
 	}
 }

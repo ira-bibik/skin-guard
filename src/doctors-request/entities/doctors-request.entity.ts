@@ -22,7 +22,7 @@ export class DoctorsRequest {
 		onDelete: 'CASCADE',
 	})
 	@JoinColumn({ name: 'patient_id' })
-	patientId: Patient;
+	patient: Patient;
 
 	@ManyToOne(() => Doctor, (doctor) => doctor.requests, {
 		onDelete: 'CASCADE',

@@ -24,6 +24,7 @@ export class ScheduleService {
 	) {}
 
 	async create(dto: CreateScheduleDto, user: IUser) {
+		// make function for this
 		const isPatientExist = await this.patientService.findOne(dto.patientId);
 		if (!isPatientExist)
 			throw new NotFoundException("Patient doesn't exist");
@@ -50,6 +51,8 @@ export class ScheduleService {
 		if (isScheduleExist) {
 			throw new BadRequestException('This schedule already exist');
 		}
+		///
+
 		const newSchedule = await this.scheduleRepository.save({
 			patient: { patientId: dto.patientId },
 			product: { productId: dto.productId },
@@ -85,21 +88,66 @@ export class ScheduleService {
 		});
 	}
 
-	//is neccessary?
 	async findOne(scheduleId: number) {
 		const schedule = await this.scheduleRepository.findOne({
 			where: { scheduleId },
 			relations: { product: true, patient: true },
 		});
-		if (!schedule) throw new NotFoundException("Schedule doesn't exist");
 		return schedule;
 	}
 
-	update(id: number, updateScheduleDto: UpdateScheduleDto) {
-		return `This action updates a #${id} schedule`;
+	async update(id: number, dto: UpdateScheduleDto, user: IUser) {
+		const schedule = await this.findOne(id);
+		if (!schedule) throw new NotFoundException("Schedule doesn't exist");
+
+		// make function for this
+		const isAllow = await this.patientService.check(
+			user,
+			schedule.patient.patientId
+		);
+		if (!isAllow)
+			throw new ForbiddenException(
+				"You can't manage schedule of this patient"
+			);
+
+		if (!dto.description && !dto.time)
+			throw new BadRequestException('Enter some data...');
+
+		const updatedSchedule = {
+			...schedule,
+			time: dto?.time,
+			description: dto?.description,
+		};
+
+		const isScheduleExist = await this.scheduleRepository.findOne({
+			where: {
+				product: { productId: updatedSchedule.product.productId },
+				patient: { patientId: updatedSchedule.patient.patientId },
+				time: updatedSchedule.time,
+			},
+		});
+		if (isScheduleExist) {
+			throw new BadRequestException('This schedule already exists');
+		}
+		///
+
+		await this.scheduleRepository.update(id, updatedSchedule);
+
+		return { message: 'Schedule was succesfully updated' };
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} schedule`;
+	async remove(id: number, user: IUser) {
+		const schedule = await this.findOne(id);
+		if (!schedule) throw new NotFoundException("Schedule doesn't exist");
+
+		const isAllow = await this.patientService.check(user, schedule.patient.patientId);
+		if (!isAllow)
+			throw new ForbiddenException(
+				"You can't manage schedule of this patient"
+      );
+    
+    await this.scheduleRepository.delete(id);
+    
+		return { message: 'Schedule was succesfully deleted' };
 	}
 }
