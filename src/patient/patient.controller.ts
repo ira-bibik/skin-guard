@@ -16,10 +16,12 @@ import { UpdatePatientDto } from './dto/update-patient.dto';
 import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from 'src/user/guards/roles.guard';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
+import { ScheduleService } from 'src/schedule/schedule.service';
 
 @Controller('patient')
 export class PatientController {
-	constructor(private readonly patientService: PatientService) {}
+	constructor(private readonly patientService: PatientService
+	, private readonly scheduleService: ScheduleService) { }
 
 	@Get()
 	findAll(
@@ -33,7 +35,10 @@ export class PatientController {
 	@Roles('patient')
 	@UseGuards(RolesGuard)
 	getMe(@Request() req) {
-		return this.patientService.findOneByPatientId(req.user.idByRole);
+		return this.patientService.findOneByPatientId(
+			req.user,
+			req.user.idByRole
+		);
 	}
 
 	@Get('users/:userId')
@@ -44,8 +49,14 @@ export class PatientController {
 
 	@Get(':patientId')
 	@UseGuards(JwtAuthGuard)
-	findOneByDoctorId(@Param('patientId') id: string) {
-		return this.patientService.findOneByPatientId(+id);
+	findOneByPatientId(@Request() req, @Param('patientId') id: string) {
+		return this.patientService.findOneByPatientId(req.user, +id);
+	}
+
+	@Get(':patientId/schedule')
+	@UseGuards(JwtAuthGuard)
+	findAllByPatientId(@Request() req, @Param('patientId') id: string) {
+		return this.scheduleService.findSchedulesByPatientId(req.user, +id);
 	}
 
 	@Patch()

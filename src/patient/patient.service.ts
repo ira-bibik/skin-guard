@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Patient } from './entities/patient.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { IUser } from 'src/types/types';
 
 @Injectable()
 export class PatientService {
@@ -19,7 +20,7 @@ export class PatientService {
 
 	async findAll(page, limit) {
 		const patients = await this.patientRepository.find({
-			relations: { user: true },
+			// relations: { user: true },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
@@ -29,26 +30,52 @@ export class PatientService {
 	async findPatientsByDoctorId(doctorId, page, limit) {
 		const patients = await this.patientRepository.find({
 			where: { doctor: { doctorId } },
+			relations: { schedule: true },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
 		return { patients };
 	}
-
-	async findOneByUserId(id: number) {
+	// maybe should be deleted
+	async findOneByUserId(userId: number) {
 		const patient = await this.patientRepository.findOne({
-			where: { user: { userId: id } },
+			where: { user: { userId } },
 		});
 		if (!patient) throw new NotFoundException("This patient doesn't exist");
 		return patient;
 	}
 
-	async findOneByPatientId(id: number) {
+	async findOneByPatientId(user: IUser, patientId: number) {
+		const isAdditionalInfoTrue = await this.check(user, patientId);
 		const patient = await this.patientRepository.findOne({
-			where: { patientId: id },
+			where: { patientId },
+			relations: {
+				schedule: isAdditionalInfoTrue,
+				doctor: isAdditionalInfoTrue,
+			},
 		});
 		if (!patient) throw new NotFoundException("This patient doesn't exist");
 		return patient;
+	}
+
+	async findOne(patientId: number) {
+		const patient = await this.patientRepository.findOne({
+			where: { patientId },
+		});
+		return patient;
+	}
+
+	async check(user: IUser, patientId: number) {
+		const { idByRole, role } = user;
+		if (role === 'admin') return true;
+		if (role === 'patient') {
+			return +idByRole === patientId;
+		} else if (role === 'doctor') {
+			const user = await this.patientRepository.findOne({
+				where: { patientId, doctor: { doctorId: +idByRole } },
+			});
+			return Boolean(user);
+		}
 	}
 
 	async update(id: number, dto: UpdatePatientDto) {
