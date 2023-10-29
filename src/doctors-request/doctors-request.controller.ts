@@ -24,7 +24,6 @@ export class DoctorsRequestController {
 	) {}
 
 	@Post()
-	//@UseGuards(JwtAuthGuard)
 	@Roles('patient')
 	@UseGuards(RolesGuard)
 	@UsePipes(new ValidationPipe())
@@ -44,12 +43,12 @@ export class DoctorsRequestController {
 		return this.doctorsRequestService.findAll();
 	}
 
-	@Get('myOwn')
-	@Roles('doctor')
-	@UseGuards(RolesGuard)
-	findRequestByDoctorId(@Request() req) {
-		return this.doctorsRequestService.findRequestByDoctorId(req.user);
-	}
+	// @Get('myOwn')
+	// @Roles('doctor')
+	// @UseGuards(RolesGuard)
+	// findRequestByDoctorId(@Request() req) {
+	// 	return this.doctorsRequestService.findRequestByDoctorId(req.user);
+	// }
 
 	@Patch(':id')
 	@Roles('doctor')

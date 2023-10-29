@@ -9,6 +9,7 @@ import {
 	UsePipes,
 	ValidationPipe,
 	UseGuards,
+	Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,7 +18,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from './guards/roles.guard';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
 	constructor(private readonly userService: UserService) {}
 
@@ -33,18 +34,29 @@ export class UserController {
 		return this.userService.create(createUserDto);
 	}
 
+	@Get()
+	@Roles('admin')
+	@UseGuards(RolesGuard)
+	findAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 9
+	) {
+		return this.userService.findAll(+page, +limit);
+	}
+
 	//profile(getMe) it's not neccessary
 	@UseGuards(JwtAuthGuard)
 	@Get('profile')
 	getProfile(@Request() req) {
 		return req.user;
 	}
+	///
 
-	@Get()
+	@Get('/:userId')
 	@Roles('admin')
 	@UseGuards(RolesGuard)
-	findAll() {
-		return this.userService.findAll();
+	findOneByUserId(@Param('userId') id: string) {
+		return this.userService.findOneByUserId(+id);
 	}
 
 	@Delete(':id')

@@ -52,9 +52,9 @@ export class ProductController {
 		const brands = filters.brands ? filters.brands.split(',') : [];
 		const productTypes = filters.productTypes
 			? filters.productTypes.split(',')
-      : [];
-    const skinTypes = filters.skinTypes ? filters.skinTypes.split(',') : [];
-    
+			: [];
+		const skinTypes = filters.skinTypes ? filters.skinTypes.split(',') : [];
+
 		return this.productService.filterProducts({
 			brands: brands,
 			productTypes: productTypes,

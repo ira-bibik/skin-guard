@@ -78,9 +78,12 @@ export class UserService {
 		};
 	}
 
-	async findAll() {
-		const users = await this.usersRepository.find();
-		return { users };
+	async findAll(page: number, limit: number) {
+		const users = await this.usersRepository.find({
+			take: limit,
+			skip: (page - 1) * limit,
+		});
+		return users;
 	}
 
 	async findOne(email: string) {
@@ -88,6 +91,20 @@ export class UserService {
 			where: { email },
 		});
 		return user;
+	}
+
+	async findOneByUserId(id: number) {
+		const user = await this.usersRepository.findOne({
+			where: { userId: id },
+		});
+		if (!user) throw new NotFoundException("This user doesn't exist");
+		if (user.role === "patient") {
+			return await this.patientService.findOneByUserId(id);
+		} else if (user.role === "doctor") {
+			return await this.doctorService.findOneByUserId(id);
+		} else {
+			return user;
+		}
 	}
 
 	async validateUser(email: string, password: string) {

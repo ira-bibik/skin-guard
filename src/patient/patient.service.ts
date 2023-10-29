@@ -18,30 +18,34 @@ export class PatientService {
 		return newPatient;
 	}
 
-	async findAll(page, limit) {
+	async findAll(page: number, limit: number) {
 		const patients = await this.patientRepository.find({
 			// relations: { user: true },
+			relations: { doctor: true },
+			take: limit,
+			skip: (page - 1) * limit,
+		});
+		return patients;
+	}
+
+	async findPatientsByDoctorId(
+		doctorId: number,
+		page: number,
+		limit: number
+	) {
+		const patients = await this.patientRepository.find({
+			where: { doctor: { doctorId } },
+			relations: { schedule: { product: true } },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
 		return { patients };
 	}
 
-	async findPatientsByDoctorId(doctorId, page, limit) {
-		const patients = await this.patientRepository.find({
-			where: { doctor: { doctorId } },
-			relations: { schedule: true },
-			take: limit,
-			skip: (page - 1) * limit,
-		});
-		return { patients };
-	}
-	// maybe should be deleted
 	async findOneByUserId(userId: number) {
 		const patient = await this.patientRepository.findOne({
 			where: { user: { userId } },
 		});
-		if (!patient) throw new NotFoundException("This patient doesn't exist");
 		return patient;
 	}
 
@@ -50,7 +54,7 @@ export class PatientService {
 		const patient = await this.patientRepository.findOne({
 			where: { patientId },
 			relations: {
-				schedule: isAdditionalInfoTrue,
+				schedule: {product: isAdditionalInfoTrue },
 				doctor: isAdditionalInfoTrue,
 			},
 		});

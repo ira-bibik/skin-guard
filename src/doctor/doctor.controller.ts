@@ -1,19 +1,34 @@
-import { Controller, Get, Post,Request, Body, Patch, Param, Delete, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Request,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	Query,
+	UseGuards,
+	UsePipes,
+	ValidationPipe,
+} from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
 import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from 'src/user/guards/roles.guard';
 import { PatientService } from 'src/patient/patient.service';
+import { DoctorsRequestService } from 'src/doctors-request/doctors-request.service';
 
-@Controller('doctor')
+@Controller('users/doctors')
 export class DoctorController {
 	constructor(
 		private readonly doctorService: DoctorService,
-		private readonly patientService: PatientService
+		private readonly patientService: PatientService,
+		private readonly doctorsRequestService: DoctorsRequestService
 	) {}
 
-	@Get()
+	@Get('/all')
 	findAll(
 		@Query('page') page: number = 1,
 		@Query('limit') limit: number = 9
@@ -21,14 +36,14 @@ export class DoctorController {
 		return this.doctorService.findAll(+page, +limit);
 	}
 
-	@Get('profile')
+	@Get('me')
 	@Roles('doctor')
 	@UseGuards(RolesGuard)
 	getMe(@Request() req) {
 		return this.doctorService.findOneByDoctorId(req.user.idByRole);
 	}
 
-	@Get('patients')
+	@Get('me/patients')
 	@Roles('doctor')
 	@UseGuards(RolesGuard)
 	findPatientsByDoctorId(
@@ -43,10 +58,11 @@ export class DoctorController {
 		);
 	}
 
-	@Get('users/:userId')
-	@UseGuards(JwtAuthGuard)
-	findOneByUserId(@Param('userId') id: string) {
-		return this.doctorService.findOneByUserId(+id);
+	@Get('me/requests')
+	@Roles('doctor')
+	@UseGuards(RolesGuard)
+	findRequestByDoctorId(@Request() req) {
+		return this.doctorsRequestService.findRequestByDoctorId(req.user);
 	}
 
 	@Get(':doctorId')

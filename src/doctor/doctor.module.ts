@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { DoctorController } from './doctor.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { Doctor } from './entities/doctor.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PatientModule } from 'src/patient/patient.module';
+import { DoctorsRequestModule } from 'src/doctors-request/doctors-request.module';
 
 @Module({
 	imports: [
@@ -18,7 +19,8 @@ import { PatientModule } from 'src/patient/patient.module';
 			}),
 			inject: [ConfigService],
 		}),
-		PatientModule
+		PatientModule,
+		forwardRef(()=>DoctorsRequestModule)
 	],
 	controllers: [DoctorController],
 	providers: [DoctorService],

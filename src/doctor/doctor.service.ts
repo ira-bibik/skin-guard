@@ -17,22 +17,21 @@ export class DoctorService {
 		return newPatient;
 	}
 
-	async findAll(page, limit) {
-		const patients = await this.doctorRepository.find({
+	async findAll(page: number, limit: number) {
+		const doctors = await this.doctorRepository.find({
 			relations: { patients: true },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
-		return { patients };
+		return doctors;
 	}
 
 	async findOneByUserId(id: number) {
-		const user = await this.doctorRepository.findOne({
+		const doctor = await this.doctorRepository.findOne({
 			where: { user: { userId: id } },
 			relations: { patients: true },
 		});
-		if (!user) throw new NotFoundException("This doctor doesn't exist");
-		return user;
+		return doctor;
 	}
 
 	async findOneByDoctorId(id: number) {

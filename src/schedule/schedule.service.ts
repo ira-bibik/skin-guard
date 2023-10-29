@@ -60,13 +60,15 @@ export class ScheduleService {
 			descriptio: dto?.description,
 		});
 		if (!newSchedule)
-			throw new BadRequestException('Something went wromg...');
+			throw new BadRequestException('Something went wrong...');
 		return newSchedule;
 	}
 
-	async findAll() {
+	async findAll(page: number, limit: number) {
 		return await this.scheduleRepository.find({
 			relations: { product: true, patient: true },
+			take: limit,
+			skip: (page - 1) * limit,
 		});
 	}
 
@@ -93,6 +95,24 @@ export class ScheduleService {
 			where: { scheduleId },
 			relations: { product: true, patient: true },
 		});
+
+		return schedule;
+	}
+
+	async findOneRequest(scheduleId: number, user: IUser) {
+		const schedule = await this.findOne(scheduleId);
+		if (!schedule) throw new NotFoundException("Schedule doesn't exist");
+
+		const isAllow = await this.patientService.check(
+			user,
+			schedule.patient.patientId
+		);
+		if (!isAllow) {
+			throw new ForbiddenException(
+				"You can't view schedule of this patient"
+			);
+		}
+
 		return schedule;
 	}
 
@@ -140,14 +160,17 @@ export class ScheduleService {
 		const schedule = await this.findOne(id);
 		if (!schedule) throw new NotFoundException("Schedule doesn't exist");
 
-		const isAllow = await this.patientService.check(user, schedule.patient.patientId);
+		const isAllow = await this.patientService.check(
+			user,
+			schedule.patient.patientId
+		);
 		if (!isAllow)
 			throw new ForbiddenException(
 				"You can't manage schedule of this patient"
-      );
-    
-    await this.scheduleRepository.delete(id);
-    
+			);
+
+		await this.scheduleRepository.delete(id);
+
 		return { message: 'Schedule was succesfully deleted' };
 	}
 }

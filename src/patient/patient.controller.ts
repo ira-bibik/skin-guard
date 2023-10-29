@@ -5,7 +5,6 @@ import {
 	Body,
 	Patch,
 	Param,
-	Delete,
 	Query,
 	UseGuards,
 	UsePipes,
@@ -18,14 +17,16 @@ import { RolesGuard } from 'src/user/guards/roles.guard';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
 import { ScheduleService } from 'src/schedule/schedule.service';
 
-@Controller('patient')
+@Controller('users/patients')
 export class PatientController {
 	constructor(
 		private readonly patientService: PatientService,
 		private readonly scheduleService: ScheduleService
 	) {}
 
-	@Get()
+	@Get('/all')
+	@Roles('admin')
+	@UseGuards(RolesGuard)
 	findAll(
 		@Query('page') page: number = 1,
 		@Query('limit') limit: number = 9
@@ -33,7 +34,7 @@ export class PatientController {
 		return this.patientService.findAll(+page, +limit);
 	}
 
-	@Get('profile')
+	@Get('me')
 	@Roles('patient')
 	@UseGuards(RolesGuard)
 	getMe(@Request() req) {
@@ -41,12 +42,6 @@ export class PatientController {
 			req.user,
 			req.user.idByRole
 		);
-	}
-
-	@Get('users/:userId')
-	@UseGuards(JwtAuthGuard)
-	findOneByUserId(@Param('userId') id: string) {
-		return this.patientService.findOneByUserId(+id);
 	}
 
 	@Get(':patientId')

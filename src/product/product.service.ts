@@ -14,8 +14,8 @@ export class ProductService {
 	constructor(
 		@InjectRepository(Product)
 		private productRepository: Repository<Product>
-	) { }
-	
+	) {}
+
 	async create(createProductDto: CreateProductDto) {
 		const isExist = await this.findOneByName(createProductDto.name);
 		if (isExist)
@@ -66,15 +66,12 @@ export class ProductService {
 			});
 		}
 
-    if (filters.skinTypes && filters.skinTypes.length > 0) {
-      // тут помилка
-			query.andWhere(
-				'ARRAY[:...skinTypes]::text[] && product.skinType',
-				{
-					skinTypes: filters.skinTypes,
-				}
-      );
-      //
+		if (filters.skinTypes && filters.skinTypes.length > 0) {
+			// тут помилка
+			query.andWhere('ARRAY[:...skinTypes]::text[] && product.skinType', {
+				skinTypes: filters.skinTypes,
+			});
+			//
 		}
 
 		return query.getMany();

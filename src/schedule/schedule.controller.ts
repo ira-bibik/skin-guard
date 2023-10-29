@@ -10,6 +10,7 @@ import {
 	Request,
   UsePipes,
   ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
@@ -29,8 +30,17 @@ export class ScheduleController {
 
 	@Get()
 	@UseGuards(JwtAuthGuard)
-	findAll() {
-		return this.scheduleService.findAll();
+	findAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 9
+	) {
+		return this.scheduleService.findAll(+page, +limit);
+	}
+
+	@Get(':scheduleId')
+	@UseGuards(JwtAuthGuard)
+	findOne(@Param('scheduleId') id: string, @Request() req) {
+		return this.scheduleService.findOneRequest(+id, req.user);
 	}
 
 	@Patch(':id')
@@ -45,7 +55,6 @@ export class ScheduleController {
 	}
 
 	@Delete(':id')
-	@Patch(':id')
 	@UseGuards(JwtAuthGuard)
 	remove(@Param('id') id: string, @Request() req) {
 		return this.scheduleService.remove(+id, req.user);
