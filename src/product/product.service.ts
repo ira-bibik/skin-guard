@@ -7,7 +7,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
+import { FindOperator, FindOptionsWhere, Repository } from 'typeorm';
 
 @Injectable()
 export class ProductService {
@@ -23,11 +23,13 @@ export class ProductService {
 		return await this.productRepository.save(createProductDto);
 	}
 
-	async findAll(page, limit) {
-		return await this.productRepository.find({
+	async findAll(page: number, limit: number) {
+		const products = await this.productRepository.find({
 			take: limit,
 			skip: (page - 1) * limit,
 		});
+		console.log(products[0]);
+		return products;
 	}
 
 	async findOne(id: number) {
@@ -47,34 +49,57 @@ export class ProductService {
 		return { message: 'Product was succesfully deleted' };
 	}
 
-	async filterProducts(filters: {
-		brands?: string[];
-		productTypes?: string[];
-		skinTypes?: string[];
-	}) {
+	async filterProducts(
+		brands?: string[],
+		skinTypes?: string[],
+		productTypes?: string[]
+	) {
 		const query = this.productRepository.createQueryBuilder('product');
 
-		if (filters.brands && filters.brands.length > 0) {
-			query.andWhere('product.brand IN (:...brands)', {
-				brands: filters.brands,
-			});
+		if (brands && brands.length > 0) {
+			query.andWhere('product.brand IN (:...brands)', { brands });
 		}
 
-		if (filters.productTypes && filters.productTypes.length > 0) {
+		//work incorrect
+		if (skinTypes && skinTypes.length > 0) {
+			// if (skinTypes.length === 1) {
+			// 	query.andWhere('product.skinType IN (:...skinTypes)', {
+			// 		skinTypes,
+			// 	});
+			// } else {
+			// 	query.andWhere('product.skinType = :skinTypes', {
+			// 		skinTypes: skinTypes.join(','),
+			// 	});
+			// }
+
+			query.andWhere(
+				'product.skinType = ANY(ARRAY[:...skinTypes]::text[])',
+				{
+					skinTypes,
+				}
+			);
+		}
+
+		if (productTypes && productTypes.length > 0) {
 			query.andWhere('product.productType IN (:...productTypes)', {
-				productTypes: filters.productTypes,
+				productTypes,
 			});
 		}
 
-		if (filters.skinTypes && filters.skinTypes.length > 0) {
-			// тут помилка
-			query.andWhere('ARRAY[:...skinTypes]::text[] && product.skinType', {
-				skinTypes: filters.skinTypes,
-			});
-			//
-		}
-
-		return query.getMany();
+		// const products = await this.productRepository.find({
+		// 	where: {
+		// 		brand: {
+		// 			in: brands.join(","),
+		// 		},
+		// 		productType: {
+		// 			in: productTypes,
+		// 		},
+		// 		skinType: {
+		// 			_iLike: `%${skinTypes.join('|')}%`,
+		// 		},
+		// 	},
+		// });
+		return await query.getMany();
 	}
 
 	async findOneByName(name: string) {

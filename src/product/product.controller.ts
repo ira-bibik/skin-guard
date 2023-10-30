@@ -34,32 +34,26 @@ export class ProductController {
 	@Get()
 	findAll(
 		@Query('page') page: number = 1,
-		@Query('limit') limit: number = 3
+		@Query('limit') limit: number = 9
 	) {
 		return this.productService.findAll(+page, +limit);
 	}
 
 	@Get('filter')
 	@UseGuards(JwtAuthGuard)
-	filter(
-		@Query()
-		filters: {
-			brands?: string;
-			productTypes?: string;
-			skinTypes?: string;
-		}
+	filterProducts(
+		@Query('brands') brands: string,
+		@Query('skinTypes') skinTypes: string,
+		@Query('productTypes') productTypes: string
 	) {
-		const brands = filters.brands ? filters.brands.split(',') : [];
-		const productTypes = filters.productTypes
-			? filters.productTypes.split(',')
-			: [];
-		const skinTypes = filters.skinTypes ? filters.skinTypes.split(',') : [];
-
-		return this.productService.filterProducts({
-			brands: brands,
-			productTypes: productTypes,
-			skinTypes: skinTypes,
-		});
+		const brandsA = brands ? brands.split(',') : [];
+		const productTypesA = productTypes ? productTypes.split(',') : [];
+		const skinTypesA = skinTypes ? skinTypes.split(',') : [];
+		return this.productService.filterProducts(
+			brandsA,
+			skinTypesA,
+			productTypesA
+		);
 	}
 
 	@Get(':id')
