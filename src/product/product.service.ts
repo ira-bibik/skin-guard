@@ -8,6 +8,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { FindOperator, FindOptionsWhere, Repository } from 'typeorm';
+import { FilterDoctorDto } from 'src/types/types';
 
 @Injectable()
 export class ProductService {
@@ -20,7 +21,22 @@ export class ProductService {
 		const isExist = await this.findOneByName(createProductDto.name);
 		if (isExist)
 			throw new BadRequestException('This product already exist');
-		return await this.productRepository.save(createProductDto);
+		const dto: FilterDoctorDto = {};
+
+		for (const key of [
+			'name',
+			'productType',
+			'brand',
+			'ingredients',
+			'amount',
+			'skinType',
+			'description',
+		]) {
+			if (createProductDto[key]) {
+				dto[key] = createProductDto[key];
+			}
+		}
+		return await this.productRepository.save(dto);
 	}
 
 	async findAll(page: number, limit: number) {
@@ -48,7 +64,24 @@ export class ProductService {
 
 	async update(id: number, updateProductDto: UpdateProductDto) {
 		await this.findOneById(id);
-		await this.productRepository.update(id, updateProductDto);
+
+		const dto: FilterDoctorDto = {};
+
+		for (const key of [
+			'name',
+			'productType',
+			'brand',
+			'ingredients',
+			'amount',
+			'skinType',
+			'description',
+		]) {
+			if (updateProductDto[key]) {
+				dto[key] = updateProductDto[key];
+			}
+		}
+
+		await this.productRepository.update(id, dto);
 		return { message: 'Product was succesfully updated' };
 	}
 

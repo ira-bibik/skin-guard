@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { FilterDoctorDto } from 'src/types/types';
 
 @Injectable()
 export class DoctorService {
@@ -58,7 +59,15 @@ export class DoctorService {
 			where: { doctorId: id },
 		});
 		if (!doctor) throw new NotFoundException("This doctor doesn't exist");
-		await this.doctorRepository.update(id, dto);
+
+		const filteredDto: FilterDoctorDto = {};
+		for (const key of ['name', 'description', 'specialization', 'work']) {
+			if (dto[key]) {
+				filteredDto[key] = dto[key];
+			}
+		}
+
+		await this.doctorRepository.update(id, filteredDto);
 		return { message: 'Doctor was succesfully updated' };
 	}
 

@@ -32,6 +32,4 @@ export class UpdateDoctorDto {
 			'Description must be not less than 5 characters and not bigger than 1000 characters',
 	})
 	readonly description: string;
-
-	//patients: Patient[];
 }

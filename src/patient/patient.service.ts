@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Patient } from './entities/patient.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { IUser } from 'src/types/types';
+import {  FilterPatientDto, IUser } from 'src/types/types';
 
 @Injectable()
 export class PatientService {
@@ -106,7 +106,13 @@ export class PatientService {
 			where: { patientId: id },
 		});
 		if (!patient) throw new NotFoundException("This patient doesn't exist");
-		await this.patientRepository.update(id, dto);
+		const filteredDto: FilterPatientDto = {};
+		for (const key of ['name', 'age', 'skinType']) {
+			if (dto[key]) {
+				filteredDto[key] = dto[key];
+			}
+		}
+		await this.patientRepository.update(id, filteredDto);
 		return { message: 'Patient was succesfully updated' };
 	}
 

@@ -67,7 +67,7 @@ export class PatientController {
 	@Patch('/unsubmit')
 	@Roles('patient')
 	@UseGuards(RolesGuard)
-	@UsePipes(new ValidationPipe())
+	//@UsePipes(new ValidationPipe())
 	deleteDoctor(@Request() req) {
 		return this.patientService.deleteDoctor(req.user);
 	}
