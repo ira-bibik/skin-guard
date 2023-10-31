@@ -65,11 +65,20 @@ export class ScheduleService {
 	}
 
 	async findAll(page: number, limit: number) {
-		return await this.scheduleRepository.find({
+		if (page <= 0 || limit <= 0) {
+			throw new Error(
+				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
+			);
+		}
+		const [schedules, total] = await this.scheduleRepository.findAndCount({
 			relations: { product: true, patient: true },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
+		const totalPages = Math.ceil(total / limit);
+		const currentPage = page;
+
+		return { schedules, totalPages, currentPage };
 	}
 
 	async findSchedulesByPatientId(user: IUser, patientId: number) {

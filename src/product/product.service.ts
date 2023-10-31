@@ -24,12 +24,21 @@ export class ProductService {
 	}
 
 	async findAll(page: number, limit: number) {
-		const products = await this.productRepository.find({
+		if (page <= 0 || limit <= 0) {
+			throw new Error(
+				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
+			);
+		}
+
+		const [products, total] = await this.productRepository.findAndCount({
 			take: limit,
 			skip: (page - 1) * limit,
 		});
-		console.log(products[0]);
-		return products;
+
+		const totalPages = Math.ceil(total / limit);
+		const currentPage = page;
+
+		return { products, totalPages, currentPage };
 	}
 
 	async findOne(id: number) {

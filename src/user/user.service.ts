@@ -79,11 +79,19 @@ export class UserService {
 	}
 
 	async findAll(page: number, limit: number) {
-		const users = await this.usersRepository.find({
+		if (page <= 0 || limit <= 0) {
+			throw new Error(
+				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
+			);
+		}
+		const [users, total] = await this.usersRepository.findAndCount({
 			take: limit,
 			skip: (page - 1) * limit,
 		});
-		return users;
+
+		const totalPages = Math.ceil(total / limit);
+		const currentPage = page;
+		return { users, totalPages, currentPage };
 	}
 
 	async findOne(email: string) {
@@ -98,9 +106,9 @@ export class UserService {
 			where: { userId: id },
 		});
 		if (!user) throw new NotFoundException("This user doesn't exist");
-		if (user.role === "patient") {
+		if (user.role === 'patient') {
 			return await this.patientService.findOneByUserId(id);
-		} else if (user.role === "doctor") {
+		} else if (user.role === 'doctor') {
 			return await this.doctorService.findOneByUserId(id);
 		} else {
 			return user;

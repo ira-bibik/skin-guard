@@ -19,13 +19,22 @@ export class PatientService {
 	}
 
 	async findAll(page: number, limit: number) {
-		const patients = await this.patientRepository.find({
+		if (page <= 0 || limit <= 0) {
+			throw new Error(
+				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
+			);
+		}
+		const [patients, total] = await this.patientRepository.findAndCount({
 			// relations: { user: true },
 			relations: { doctor: true },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
-		return patients;
+
+		const totalPages = Math.ceil(total / limit);
+		const currentPage = page;
+
+		return { patients, totalPages, currentPage };
 	}
 
 	async findPatientsByDoctorId(
@@ -33,13 +42,22 @@ export class PatientService {
 		page: number,
 		limit: number
 	) {
-		const patients = await this.patientRepository.find({
+		if (page <= 0 || limit <= 0) {
+			throw new Error(
+				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
+			);
+		}
+
+		const [patients, total] = await this.patientRepository.findAndCount({
 			where: { doctor: { doctorId } },
 			relations: { schedule: { product: true } },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
-		return { patients };
+		const totalPages = Math.ceil(total / limit);
+		const currentPage = page;
+
+		return { patients, totalPages, currentPage };
 	}
 
 	async findOneByUserId(userId: number) {
@@ -54,7 +72,7 @@ export class PatientService {
 		const patient = await this.patientRepository.findOne({
 			where: { patientId },
 			relations: {
-				schedule: {product: isAdditionalInfoTrue },
+				schedule: { product: isAdditionalInfoTrue },
 				doctor: isAdditionalInfoTrue,
 			},
 		});

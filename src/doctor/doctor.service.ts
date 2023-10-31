@@ -18,12 +18,22 @@ export class DoctorService {
 	}
 
 	async findAll(page: number, limit: number) {
-		const doctors = await this.doctorRepository.find({
+		if (page <= 0 || limit <= 0) {
+			throw new Error(
+				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
+			);
+		}
+
+		const [doctors, total] = await this.doctorRepository.findAndCount({
 			relations: { patients: true },
 			take: limit,
 			skip: (page - 1) * limit,
 		});
-		return doctors;
+
+		const totalPages = Math.ceil(total / limit);
+		const currentPage = page;
+
+		return { doctors, totalPages, currentPage };
 	}
 
 	async findOneByUserId(id: number) {
