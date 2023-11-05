@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { exec } from 'child_process';
 
 @Injectable()
 export class DatabaseService {
 	constructor(private readonly configService: ConfigService) {}
 
 	async backup() {
-		// const databaseName = this.configService.get('DATABASE_NAME');
-		// const backupCommand = `pg_dump -Fc ${databaseName} > backup.sql`;
-		// await exec(backupCommand);
+		const connectionString = this.buildConnectionString();
+		const backupCommand = `pg_dump -Fc ${connectionString} > backup.sql`;
+		await exec(backupCommand);
 	}
 
 	async restore() {
-		// const databaseName = this.configService.get('DATABASE_NAME');
-		// const restoreCommand = `pg_restore -d ${databaseName} backup.sql`;
-		// await exec(restoreCommand);
+		const connectionString = this.buildConnectionString();
+		const restoreCommand = `pg_restore -c -d ${connectionString} -F c backup.sql`;
+		await exec(restoreCommand);
 	}
 
 	private buildConnectionString(): string {
