@@ -80,7 +80,7 @@ export class UserService {
 
 	async findAll(page: number, limit: number) {
 		if (page <= 0 || limit <= 0) {
-			throw new Error(
+			throw new BadRequestException(
 				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
 			);
 		}

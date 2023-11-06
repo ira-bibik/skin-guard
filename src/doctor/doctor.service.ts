@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from './entities/doctor.entity';
@@ -20,7 +20,7 @@ export class DoctorService {
 
 	async findAll(page: number, limit: number) {
 		if (page <= 0 || limit <= 0) {
-			throw new Error(
+			throw new BadRequestException(
 				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
 			);
 		}

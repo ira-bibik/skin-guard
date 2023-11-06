@@ -34,13 +34,14 @@ export class ProductController {
 	@Get()
 	findAll(
 		@Query('page') page: number = 1,
-		@Query('limit') limit: number = 9
+		@Query('limit') limit: number = 9,
+		@Query('s') s: string
 	) {
-		return this.productService.findAll(+page, +limit);
+		return this.productService.findAll(+page, +limit, s);
 	}
 
 	@Get('filter')
-	@UseGuards(JwtAuthGuard)
+	// @UseGuards(JwtAuthGuard)
 	filterProducts(
 		@Query('brands') brands: string,
 		@Query('skinTypes') skinTypes: string,

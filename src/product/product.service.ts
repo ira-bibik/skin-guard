@@ -7,7 +7,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
-import { FindOperator, FindOptionsWhere, Repository } from 'typeorm';
+import {  QueryRunner, In, Like, Repository } from 'typeorm';
 import { FilterDoctorDto } from 'src/types/types';
 
 @Injectable()
@@ -39,9 +39,9 @@ export class ProductService {
 		return await this.productRepository.save(dto);
 	}
 
-	async findAll(page: number, limit: number) {
+	async findAll(page: number, limit: number, str: string) {
 		if (page <= 0 || limit <= 0) {
-			throw new Error(
+			throw new BadRequestException(
 				"Invalid 'page' and 'limit' values. Both 'page' and 'limit' must be greater than 0."
 			);
 		}
@@ -49,6 +49,11 @@ export class ProductService {
 		const [products, total] = await this.productRepository.findAndCount({
 			take: limit,
 			skip: (page - 1) * limit,
+			where: str && [
+				{ name: Like(`%${str}%`) },
+				{ productType: Like(`%${str}%`) },
+				{ skinType: In([str]) },
+			],
 		});
 
 		const totalPages = Math.ceil(total / limit);
@@ -96,52 +101,25 @@ export class ProductService {
 		skinTypes?: string[],
 		productTypes?: string[]
 	) {
-		const query = this.productRepository.createQueryBuilder('product');
+		const where: any = {};
 
 		if (brands && brands.length > 0) {
-			query.andWhere('product.brand IN (:...brands)', { brands });
-		}
-
-		//work incorrect
-		if (skinTypes && skinTypes.length > 0) {
-			// if (skinTypes.length === 1) {
-			// 	query.andWhere('product.skinType IN (:...skinTypes)', {
-			// 		skinTypes,
-			// 	});
-			// } else {
-			// 	query.andWhere('product.skinType = :skinTypes', {
-			// 		skinTypes: skinTypes.join(','),
-			// 	});
-			// }
-
-			query.andWhere(
-				'product.skinType = ANY(ARRAY[:...skinTypes]::text[])',
-				{
-					skinTypes,
-				}
-			);
+			where.brand = In(brands);
 		}
 
 		if (productTypes && productTypes.length > 0) {
-			query.andWhere('product.productType IN (:...productTypes)', {
-				productTypes,
-			});
+			where.productType = In(productTypes);
 		}
 
-		// const products = await this.productRepository.find({
-		// 	where: {
-		// 		brand: {
-		// 			in: brands.join(","),
-		// 		},
-		// 		productType: {
-		// 			in: productTypes,
-		// 		},
-		// 		skinType: {
-		// 			_iLike: `%${skinTypes.join('|')}%`,
-		// 		},
-		// 	},
-		// });
-		return await query.getMany();
+		if (skinTypes && skinTypes.length > 0) {
+			where.skinType = In(skinTypes);
+		}
+
+		const products = await this.productRepository.find({
+			where,
+		});
+
+		return products;
 	}
 
 	async findOneByName(name: string) {
