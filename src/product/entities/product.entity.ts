@@ -29,4 +29,7 @@ export class Product {
 
 	@OneToMany(() => Schedule, (schedule) => schedule.patient)
 	schedule: Schedule[];
+
+	@Column({ nullable: true })
+	photo: string;
 }

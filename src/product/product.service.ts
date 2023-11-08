@@ -7,14 +7,16 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
-import {  QueryRunner, In, Like, Repository } from 'typeorm';
+import { In, Like, Repository } from 'typeorm';
 import { FilterDoctorDto } from 'src/types/types';
+import { UploadFilesService } from 'src/upload-files/upload-files.service';
 
 @Injectable()
 export class ProductService {
 	constructor(
 		@InjectRepository(Product)
-		private productRepository: Repository<Product>
+		private productRepository: Repository<Product>,
+		private readonly uploadService: UploadFilesService
 	) {}
 
 	async create(createProductDto: CreateProductDto) {
@@ -37,6 +39,14 @@ export class ProductService {
 			}
 		}
 		return await this.productRepository.save(dto);
+	}
+
+	async upload(fileName: string, file: Buffer, id: string) {
+		const product = await this.findOneById(+id);
+		const photoURL = await this.uploadService.uploadFile(fileName, file);
+		await this.productRepository.update(id, { photo: photoURL });
+		// return photoURL;
+		return { ...product, photo: photoURL };
 	}
 
 	async findAll(page: number, limit: number, str: string) {

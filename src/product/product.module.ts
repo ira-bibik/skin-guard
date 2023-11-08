@@ -3,10 +3,9 @@ import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
-import { JwtStrategy } from 'src/user/strategy/jwt.strategy';
-import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UploadFilesModule } from 'src/upload-files/upload-files.module';
 
 @Module({
 	imports: [
@@ -19,6 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 			}),
 			inject: [ConfigService],
 		}),
+		UploadFilesModule
 	],
 	controllers: [ProductController],
 	providers: [ProductService],

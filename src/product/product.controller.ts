@@ -10,6 +10,11 @@ import {
 	ValidationPipe,
 	UseGuards,
 	Query,
+	UseInterceptors,
+	UploadedFile,
+	ParseFilePipe,
+	MaxFileSizeValidator,
+	FileTypeValidator,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -17,6 +22,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from 'src/user/guards/roles.guard';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('product')
 export class ProductController {
@@ -29,6 +35,22 @@ export class ProductController {
 	@UsePipes(new ValidationPipe())
 	create(@Body() createProductDto: CreateProductDto) {
 		return this.productService.create(createProductDto);
+	}
+
+	@Post('upload/:id')
+	@Roles('admin')
+	@UseGuards(RolesGuard)
+	@UseInterceptors(FileInterceptor('file'))
+	async uploadFile(
+		@UploadedFile(new ParseFilePipe({
+			validators: [
+				//new MaxFileSizeValidator({ maxSize: 1000 }),
+				new FileTypeValidator({fileType: 'image/jpeg'})
+			] }))
+		file: Express.Multer.File,
+		@Param('id') id: string
+	) {
+		return await this.productService.upload(file.originalname, file.buffer, id)
 	}
 
 	@Get()
