@@ -5,17 +5,27 @@ import { Patient } from './entities/patient.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import {  FilterPatientDto, IUser } from 'src/types/types';
+import { UploadFilesService } from 'src/upload-files/upload-files.service';
 
 @Injectable()
 export class PatientService {
 	constructor(
 		@InjectRepository(Patient)
-		private patientRepository: Repository<Patient>
+		private patientRepository: Repository<Patient>,
+		private readonly uploadService: UploadFilesService
 	) {}
 
 	async create(user: User) {
 		const newPatient = await this.patientRepository.save({ user });
 		return newPatient;
+	}
+
+	async upload(fileName: string, file: Buffer, id: number) {
+		const patient = await this.findOne(+id); 
+		const photoURL = await this.uploadService.uploadFile(fileName, file);
+		await this.patientRepository.update(id, { photo: photoURL });
+		// return photoURL;
+		return { ...patient, photo: photoURL };
 	}
 
 	async findAll(page: number, limit: number) {

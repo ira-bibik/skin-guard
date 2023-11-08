@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PatientModule } from 'src/patient/patient.module';
 import { DoctorsRequestModule } from 'src/doctors-request/doctors-request.module';
+import { UploadFilesModule } from 'src/upload-files/upload-files.module';
 
 @Module({
 	imports: [
@@ -20,7 +21,8 @@ import { DoctorsRequestModule } from 'src/doctors-request/doctors-request.module
 			inject: [ConfigService],
 		}),
 		PatientModule,
-		forwardRef(()=>DoctorsRequestModule)
+		forwardRef(() => DoctorsRequestModule),
+		UploadFilesModule
 	],
 	controllers: [DoctorController],
 	providers: [DoctorService],

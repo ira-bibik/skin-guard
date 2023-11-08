@@ -9,6 +9,12 @@ import {
 	UseGuards,
 	UsePipes,
 	ValidationPipe,
+	UseInterceptors,
+	Post,
+	UploadedFile,
+	ParseFilePipe,
+	FileTypeValidator,
+	MaxFileSizeValidator,
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { UpdatePatientDto } from './dto/update-patient.dto';
@@ -16,6 +22,7 @@ import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from 'src/user/guards/roles.guard';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
 import { ScheduleService } from 'src/schedule/schedule.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users/patients')
 export class PatientController {
@@ -24,7 +31,31 @@ export class PatientController {
 		private readonly scheduleService: ScheduleService
 	) {}
 
-	@Get('/all')
+	@Post('uploadPhoto')
+	@Roles('patient')
+	@UseGuards(RolesGuard)
+	@UseInterceptors(FileInterceptor('file'))
+	async uploadFile(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					// new MaxFileSizeValidator({ maxSize: 1000 }),
+					new FileTypeValidator({ fileType: 'image/jpeg' }),
+				],
+			})
+		)
+		file: Express.Multer.File,
+		@Request() req
+	) {
+		return await this.patientService.upload(
+			file.originalname,
+			file.buffer,
+			+req.user.idByRole
+		);
+	}
+
+
+	@Get('all')
 	@Roles('admin')
 	@UseGuards(RolesGuard)
 	findAll(

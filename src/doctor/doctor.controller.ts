@@ -11,6 +11,11 @@ import {
 	UseGuards,
 	UsePipes,
 	ValidationPipe,
+	UploadedFile,
+	UseInterceptors,
+	ParseFilePipe,
+	FileTypeValidator,
+	MaxFileSizeValidator,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
@@ -19,6 +24,7 @@ import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from 'src/user/guards/roles.guard';
 import { PatientService } from 'src/patient/patient.service';
 import { DoctorsRequestService } from 'src/doctors-request/doctors-request.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users/doctors')
 export class DoctorController {
@@ -27,6 +33,29 @@ export class DoctorController {
 		private readonly patientService: PatientService,
 		private readonly doctorsRequestService: DoctorsRequestService
 	) {}
+
+	@Post('uploadPhoto')
+	@Roles('doctor')
+	@UseGuards(RolesGuard)
+	@UseInterceptors(FileInterceptor('file'))
+	async uploadFile(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					//new MaxFileSizeValidator({ maxSize: 1000 }),
+					new FileTypeValidator({ fileType: 'image/jpeg' }),
+				],
+			})
+		)
+		file: Express.Multer.File,
+		@Request() req
+	) {
+		return await this.doctorService.upload(
+			file.originalname,
+			file.buffer,
+			+req.user.idByRole
+		);
+	}
 
 	@Get('/all')
 	findAll(

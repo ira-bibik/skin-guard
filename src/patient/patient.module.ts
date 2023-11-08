@@ -6,6 +6,7 @@ import { Patient } from './entities/patient.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from 'src/schedule/schedule.module';
+import { UploadFilesModule } from 'src/upload-files/upload-files.module';
 
 @Module({
 	imports: [
@@ -19,6 +20,7 @@ import { ScheduleModule } from 'src/schedule/schedule.module';
 			inject: [ConfigService],
 		}),
 		forwardRef(() => ScheduleModule),
+		UploadFilesModule
 	],
 	controllers: [PatientController],
 	providers: [PatientService],

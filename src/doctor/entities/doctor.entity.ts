@@ -44,4 +44,7 @@ export class Doctor {
 
 	@OneToMany(() => DoctorsRequest, (doctorRequest) => doctorRequest.doctor)
 	requests: DoctorsRequest[];
+
+	@Column({ nullable: true })
+	photo: string
 }
