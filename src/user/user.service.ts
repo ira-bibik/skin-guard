@@ -12,7 +12,7 @@ import { PatientService } from 'src/patient/patient.service';
 import { DoctorService } from 'src/doctor/doctor.service';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
-import { IUser } from 'src/types/types';
+import { IUser, UserRole } from 'src/types/types';
 import { Patient } from 'src/patient/entities/patient.entity';
 import { Doctor } from 'src/doctor/entities/doctor.entity';
 
@@ -40,10 +40,10 @@ export class UserService {
 
 		let newUser: Patient | Doctor;
 		let idByRole: number;
-		if (createUserDto.role === 'patient') {
+		if (createUserDto.role === UserRole.PATIENT) {
 			newUser = await this.patientService.create(user);
 			idByRole = newUser.patientId;
-		} else if (createUserDto.role === 'doctor') {
+		} else if (createUserDto.role === UserRole.DOCTOR) {
 			newUser = await this.doctorService.create(user);
 			idByRole = newUser.doctorId;
 		}
@@ -61,10 +61,10 @@ export class UserService {
 	async login(user: IUser) {
 		const { userId, email, role } = user;
 		let idByRole: number;
-		if (role === 'patient') {
+		if (role === UserRole.PATIENT) {
 			let patient = await this.patientService.findOneByUserId(+userId);
 			idByRole = patient.patientId;
-		} else if (role === 'doctor') {
+		} else if (role === UserRole.DOCTOR) {
 			let doctor = await this.doctorService.findOneByUserId(+userId);
 			idByRole = doctor.doctorId;
 		}
@@ -106,9 +106,9 @@ export class UserService {
 			where: { userId: id },
 		});
 		if (!user) throw new NotFoundException("This user doesn't exist");
-		if (user.role === 'patient') {
+		if (user.role === UserRole.PATIENT) {
 			return await this.patientService.findOneByUserId(id);
-		} else if (user.role === 'doctor') {
+		} else if (user.role === UserRole.DOCTOR) {
 			return await this.doctorService.findOneByUserId(id);
 		} else {
 			return user;

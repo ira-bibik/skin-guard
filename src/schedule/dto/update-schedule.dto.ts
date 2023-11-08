@@ -1,9 +1,9 @@
 import { IsIn, IsOptional, IsString, Length } from 'class-validator';
-import { UsageTime } from '../entities/schedule.entity';
+import { UsageTime } from 'src/types/types';
 
 export class UpdateScheduleDto {
 	@IsOptional()
-	@IsIn(['evening', 'morning'], {
+	@IsIn([UsageTime.EVENING, UsageTime.MORNING], {
 		message: 'The usage time value must be evening or morning',
 	})
 	readonly time: UsageTime;

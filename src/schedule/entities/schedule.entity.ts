@@ -1,5 +1,6 @@
 import { Patient } from 'src/patient/entities/patient.entity';
 import { Product } from 'src/product/entities/product.entity';
+import { UsageTime } from 'src/types/types';
 import {
 	Column,
 	Entity,
@@ -8,10 +9,7 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm';
 
-export enum UsageTime {
-	EVENING = 'evening',
-	MORNING = 'morning',
-}
+
 
 @Entity()
 export class Schedule {

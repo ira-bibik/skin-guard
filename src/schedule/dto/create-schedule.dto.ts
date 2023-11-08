@@ -6,7 +6,7 @@ import {
 	IsString,
     MaxLength,
 } from 'class-validator';
-import { UsageTime } from '../entities/schedule.entity';
+import { UsageTime } from 'src/types/types';
 
 export class CreateScheduleDto {
 	@IsNotEmpty()
@@ -18,7 +18,7 @@ export class CreateScheduleDto {
 	readonly patientId: number;
 
 	@IsNotEmpty()
-	@IsIn(['evening', 'morning'], {
+	@IsIn([UsageTime.EVENING, UsageTime.MORNING], {
 		message: 'The usage time value must be evening or morning',
 	})
 	readonly time: UsageTime;
@@ -26,8 +26,7 @@ export class CreateScheduleDto {
 	@IsOptional()
 	@IsString()
 	@MaxLength(500, {
-		message:
-			'Description must be not bigger than 500 characters',
+		message: 'Description must be not bigger than 500 characters',
 	})
 	description: string;
 }

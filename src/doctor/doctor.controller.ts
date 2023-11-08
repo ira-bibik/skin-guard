@@ -25,6 +25,7 @@ import { RolesGuard } from 'src/user/guards/roles.guard';
 import { PatientService } from 'src/patient/patient.service';
 import { DoctorsRequestService } from 'src/doctors-request/doctors-request.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UserRole } from 'src/types/types';
 
 @Controller('users/doctors')
 export class DoctorController {
@@ -35,7 +36,7 @@ export class DoctorController {
 	) {}
 
 	@Post('uploadPhoto')
-	@Roles('doctor')
+	@Roles(UserRole.DOCTOR)
 	@UseGuards(RolesGuard)
 	@UseInterceptors(FileInterceptor('file'))
 	async uploadFile(
@@ -66,14 +67,14 @@ export class DoctorController {
 	}
 
 	@Get('me')
-	@Roles('doctor')
+	@Roles(UserRole.DOCTOR)
 	@UseGuards(RolesGuard)
 	getMe(@Request() req) {
 		return this.doctorService.findOneByDoctorId(req.user.idByRole);
 	}
 
 	@Get('me/patients')
-	@Roles('doctor')
+	@Roles(UserRole.DOCTOR)
 	@UseGuards(RolesGuard)
 	findPatientsByDoctorId(
 		@Request() req,
@@ -88,7 +89,7 @@ export class DoctorController {
 	}
 
 	@Get('me/requests')
-	@Roles('doctor')
+	@Roles(UserRole.DOCTOR)
 	@UseGuards(RolesGuard)
 	findRequestByDoctorId(@Request() req) {
 		return this.doctorsRequestService.findRequestByDoctorId(req.user);
@@ -101,7 +102,7 @@ export class DoctorController {
 	}
 
 	@Patch()
-	@Roles('doctor')
+	@Roles(UserRole.DOCTOR)
 	@UseGuards(RolesGuard)
 	@UsePipes(new ValidationPipe())
 	update(@Request() req, @Body() updateDoctorDto: UpdateDoctorDto) {

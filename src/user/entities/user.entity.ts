@@ -1,11 +1,6 @@
+import { UserRole } from "src/types/types";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-
-export enum UserRole {
-	ADMIN = 'admin',
-	PATIENT = 'patient',
-	DOCTOR = 'doctor',
-}
 
 @Entity()
 export class User {

@@ -1,4 +1,13 @@
-import { UsageTime } from "src/schedule/entities/schedule.entity";
+export enum UserRole {
+	ADMIN = 'admin',
+	PATIENT = 'patient',
+	DOCTOR = 'doctor',
+}
+
+export enum UsageTime {
+	EVENING = 'evening',
+	MORNING = 'morning',
+}
 
 export interface IUser {
 	userId: string;

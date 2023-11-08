@@ -23,6 +23,7 @@ import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from 'src/user/guards/roles.guard';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UserRole } from 'src/types/types';
 
 @Controller('product')
 export class ProductController {
@@ -30,7 +31,7 @@ export class ProductController {
 
 	@Post()
 	//@UseGuards(JwtAuthGuard)
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	@UsePipes(new ValidationPipe())
 	create(@Body() createProductDto: CreateProductDto) {
@@ -38,7 +39,7 @@ export class ProductController {
 	}
 
 	@Post('upload/:id')
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	@UseInterceptors(FileInterceptor('file'))
 	async uploadFile(
@@ -85,7 +86,7 @@ export class ProductController {
 	}
 
 	@Patch(':id')
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	@UsePipes(new ValidationPipe())
 	update(
@@ -96,7 +97,7 @@ export class ProductController {
 	}
 
 	@Delete(':id')
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	remove(@Param('id') id: string) {
 		return this.productService.remove(+id);

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Patient } from './entities/patient.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
-import {  FilterPatientDto, IUser } from 'src/types/types';
+import {  FilterPatientDto, IUser, UserRole } from 'src/types/types';
 import { UploadFilesService } from 'src/upload-files/upload-files.service';
 
 @Injectable()
@@ -100,10 +100,10 @@ export class PatientService {
 
 	async check(user: IUser, patientId: number) {
 		const { idByRole, role } = user;
-		if (role === 'admin') return true;
-		if (role === 'patient') {
+		if (role === UserRole.ADMIN) return true;
+		if (role === UserRole.PATIENT) {
 			return +idByRole === patientId;
-		} else if (role === 'doctor') {
+		} else if (role === UserRole.DOCTOR) {
 			const user = await this.patientRepository.findOne({
 				where: { patientId, doctor: { doctorId: +idByRole } },
 			});

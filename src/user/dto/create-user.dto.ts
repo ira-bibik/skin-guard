@@ -1,5 +1,5 @@
 import { IsEmail, IsIn, IsNotEmpty, IsString } from "class-validator";
-import { UserRole } from "../entities/user.entity";
+import { UserRole } from "src/types/types";
 
 export class CreateUserDto {
 	@IsNotEmpty()
@@ -11,7 +11,7 @@ export class CreateUserDto {
 	readonly password: string;
 
 	@IsNotEmpty()
-	@IsIn(['admin', 'patient', 'doctor'], {
+	@IsIn([UserRole.ADMIN, UserRole.PATIENT, UserRole.DOCTOR], {
 		message: 'The role value must be one of admin, patient, or doctor',
 	})
 	readonly role: UserRole;

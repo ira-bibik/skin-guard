@@ -23,6 +23,7 @@ import { RolesGuard } from 'src/user/guards/roles.guard';
 import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
 import { ScheduleService } from 'src/schedule/schedule.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UserRole } from 'src/types/types';
 
 @Controller('users/patients')
 export class PatientController {
@@ -32,7 +33,7 @@ export class PatientController {
 	) {}
 
 	@Post('uploadPhoto')
-	@Roles('patient')
+	@Roles(UserRole.PATIENT)
 	@UseGuards(RolesGuard)
 	@UseInterceptors(FileInterceptor('file'))
 	async uploadFile(
@@ -56,7 +57,7 @@ export class PatientController {
 
 
 	@Get('all')
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	findAll(
 		@Query('page') page: number = 1,
@@ -66,7 +67,7 @@ export class PatientController {
 	}
 
 	@Get('me')
-	@Roles('patient')
+	@Roles(UserRole.PATIENT)
 	@UseGuards(RolesGuard)
 	getMe(@Request() req) {
 		return this.patientService.findOneByPatientId(
@@ -88,7 +89,7 @@ export class PatientController {
 	}
 
 	@Patch()
-	@Roles('patient')
+	@Roles(UserRole.PATIENT)
 	@UseGuards(RolesGuard)
 	@UsePipes(new ValidationPipe())
 	update(@Request() req, @Body() updatePatientDto: UpdatePatientDto) {
@@ -96,7 +97,7 @@ export class PatientController {
 	}
 
 	@Patch('/unsubmit')
-	@Roles('patient')
+	@Roles(UserRole.PATIENT)
 	@UseGuards(RolesGuard)
 	//@UsePipes(new ValidationPipe())
 	deleteDoctor(@Request() req) {

@@ -19,6 +19,7 @@ import { Roles } from 'src/decorator/roles.decorator';
 import { RolesGuard } from './guards/roles.guard';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseService } from './database.service';
+import { UserRole } from 'src/types/types';
 
 @Controller('users')
 export class UserController {
@@ -40,7 +41,7 @@ export class UserController {
 	}
 
 	@Get()
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	findAll(
 		@Query('page') page: number = 1,
@@ -59,7 +60,7 @@ export class UserController {
 
 	@Get('backup')
 	@UseGuards(RolesGuard)
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	async backup() {
 		await this.databaseService.backup();
 
@@ -68,7 +69,7 @@ export class UserController {
 
 	@Get('restore')
 	@UseGuards(RolesGuard)
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	async restore() {
 		await this.databaseService.restore();
 
@@ -76,14 +77,14 @@ export class UserController {
 	}
 
 	@Get('/:userId')
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	findOneByUserId(@Param('userId') id: string) {
 		return this.userService.findOneByUserId(+id);
 	}
 
 	@Delete(':id')
-	@Roles('admin')
+	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	remove(@Param('id') userId: string) {
 		return this.userService.remove(+userId);
