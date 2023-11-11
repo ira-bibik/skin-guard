@@ -18,7 +18,7 @@ export class DatabaseService {
 		await exec(restoreCommand);
 	}
 
-	private buildConnectionString(): string {
+	buildConnectionString(): string {
 		const dbHost = this.configService.get('DB_HOST');
 		const dbPort = this.configService.get('DB_PORT');
 		const dbUsername = this.configService.get('DB_USERNAME');

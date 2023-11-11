@@ -10,7 +10,6 @@ import { LocalStrategy } from './strategy/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import { DatabaseService } from './database.service';
 
 @Module({
 	imports: [
@@ -28,6 +27,6 @@ import { DatabaseService } from './database.service';
 		}),
 	],
 	controllers: [UserController],
-	providers: [UserService, LocalStrategy, JwtStrategy, DatabaseService],
+	providers: [UserService, LocalStrategy, JwtStrategy],
 })
 export class UserModule {}

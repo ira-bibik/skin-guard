@@ -10,6 +10,7 @@ import { DoctorsRequestModule } from './doctors-request/doctors-request.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UploadFilesModule } from './upload-files/upload-files.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
 	imports: [
@@ -35,6 +36,7 @@ import { UploadFilesModule } from './upload-files/upload-files.module';
 			inject: [ConfigService],
 		}),
 		UploadFilesModule,
+		DatabaseModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

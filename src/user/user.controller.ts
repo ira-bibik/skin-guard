@@ -17,15 +17,13 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Roles } from '../decorator/roles.decorator';
 import { RolesGuard } from './guards/roles.guard';
-import { ConfigService } from '@nestjs/config';
-import { DatabaseService } from './database.service';
 import { UserRole } from '../types/types';
 
 @Controller('users')
 export class UserController {
 	constructor(
 		private readonly userService: UserService,
-		private readonly databaseService: DatabaseService
+		
 	) {}
 
 	@Post('/login')
@@ -58,23 +56,7 @@ export class UserController {
 	}
 	///
 
-	@Get('backup')
-	@UseGuards(RolesGuard)
-	@Roles(UserRole.ADMIN)
-	async backup() {
-		await this.databaseService.backup();
-
-		return { message: 'Database backup created successfully.' };
-	}
-
-	@Get('restore')
-	@UseGuards(RolesGuard)
-	@Roles(UserRole.ADMIN)
-	async restore() {
-		await this.databaseService.restore();
-
-		return { message: 'Database restored successfully.' };
-	}
+	
 
 	@Get('/:userId')
 	@Roles(UserRole.ADMIN)
