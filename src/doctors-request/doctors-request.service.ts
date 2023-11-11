@@ -8,9 +8,9 @@ import { CreateDoctorsRequestDto } from './dto/create-doctors-request.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorsRequest } from './entities/doctors-request.entity';
 import { Repository } from 'typeorm';
-import { IUser } from 'src/types/types';
-import { PatientService } from 'src/patient/patient.service';
-import { DoctorService } from 'src/doctor/doctor.service';
+import { IUser } from '../types/types';
+import { PatientService } from '../patient/patient.service';
+import { DoctorService } from '../doctor/doctor.service';
 
 @Injectable()
 export class DoctorsRequestService {

@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DoctorsRequest } from './entities/doctors-request.entity';
-import { PatientModule } from 'src/patient/patient.module';
-import { DoctorModule } from 'src/doctor/doctor.module';
+import { PatientModule } from '../patient/patient.module';
+import { DoctorModule } from '../doctor/doctor.module';
 
 @Module({
 	imports: [

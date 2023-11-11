@@ -8,8 +8,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { In, Like, Repository } from 'typeorm';
-import { FilterDoctorDto } from 'src/types/types';
-import { UploadFilesService } from 'src/upload-files/upload-files.service';
+import { FilterDoctorDto } from '../types/types';
+import { UploadFilesService } from '../upload-files/upload-files.service';
 
 @Injectable()
 export class ProductService {

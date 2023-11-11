@@ -13,10 +13,10 @@ import {
 } from '@nestjs/common';
 import { DoctorsRequestService } from './doctors-request.service';
 import { CreateDoctorsRequestDto } from './dto/create-doctors-request.dto';
-import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
-import { Roles } from 'src/decorator/roles.decorator';
-import { RolesGuard } from 'src/user/guards/roles.guard';
-import { UserRole } from 'src/types/types';
+import { JwtAuthGuard } from '../user/guards/jwt-auth.guard';
+import { Roles } from '../decorator/roles.decorator';
+import { RolesGuard } from '../user/guards/roles.guard';
+import { UserRole } from '../types/types';
 
 @Controller('request')
 export class DoctorsRequestController {

@@ -8,13 +8,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { PatientService } from 'src/patient/patient.service';
-import { DoctorService } from 'src/doctor/doctor.service';
+import { PatientService } from '../patient/patient.service';
+import { DoctorService } from '../doctor/doctor.service';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
-import { IUser, UserRole } from 'src/types/types';
-import { Patient } from 'src/patient/entities/patient.entity';
-import { Doctor } from 'src/doctor/entities/doctor.entity';
+import { IUser, UserRole } from '../types/types';
+import { Patient } from '../patient/entities/patient.entity';
+import { Doctor } from '../doctor/entities/doctor.entity';
 
 @Injectable()
 export class UserService {

@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UploadFilesModule } from 'src/upload-files/upload-files.module';
+import { UploadFilesModule } from '../upload-files/upload-files.module';
 
 @Module({
 	imports: [

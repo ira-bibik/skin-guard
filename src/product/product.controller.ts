@@ -19,11 +19,11 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Roles } from 'src/decorator/roles.decorator';
-import { RolesGuard } from 'src/user/guards/roles.guard';
-import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
+import { Roles } from '../decorator/roles.decorator';
+import { RolesGuard } from '../user/guards/roles.guard';
+import { JwtAuthGuard } from '../user/guards/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UserRole } from 'src/types/types';
+import { UserRole } from '../types/types';
 
 @Controller('product')
 export class ProductController {

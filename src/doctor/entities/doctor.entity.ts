@@ -1,6 +1,6 @@
-import { DoctorsRequest } from 'src/doctors-request/entities/doctors-request.entity';
-import { Patient } from 'src/patient/entities/patient.entity';
-import { User } from 'src/user/entities/user.entity';
+import { DoctorsRequest } from '../../doctors-request/entities/doctors-request.entity';
+import { Patient } from '../../patient/entities/patient.entity';
+import { User } from '../../user/entities/user.entity';
 import {
 	Column,
 	CreateDateColumn,

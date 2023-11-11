@@ -3,9 +3,9 @@ import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { FilterDoctorDto } from 'src/types/types';
-import { UploadFilesService } from 'src/upload-files/upload-files.service';
+import { User } from '../user/entities/user.entity';
+import { FilterDoctorDto } from '../types/types';
+import { UploadFilesService } from '../upload-files/upload-files.service';
 
 @Injectable()
 export class DoctorService {

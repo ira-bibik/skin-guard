@@ -15,11 +15,11 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { Roles } from 'src/decorator/roles.decorator';
+import { Roles } from '../decorator/roles.decorator';
 import { RolesGuard } from './guards/roles.guard';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseService } from './database.service';
-import { UserRole } from 'src/types/types';
+import { UserRole } from '../types/types';
 
 @Controller('users')
 export class UserController {

@@ -1,5 +1,5 @@
 import { IsIn, IsOptional, IsString, Length } from 'class-validator';
-import { UsageTime } from 'src/types/types';
+import { UsageTime } from '../../types/types';
 
 export class UpdateScheduleDto {
 	@IsOptional()

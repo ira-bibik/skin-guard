@@ -6,7 +6,7 @@ import {
 	IsString,
     MaxLength,
 } from 'class-validator';
-import { UsageTime } from 'src/types/types';
+import { UsageTime } from '../../types/types';
 
 export class CreateScheduleDto {
 	@IsNotEmpty()

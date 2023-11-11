@@ -1,6 +1,5 @@
-import { UserRole } from "src/types/types";
+import { UserRole } from "../../types/types";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
-
 
 @Entity()
 export class User {

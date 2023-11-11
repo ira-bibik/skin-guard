@@ -19,13 +19,13 @@ import {
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
-import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
-import { Roles } from 'src/decorator/roles.decorator';
-import { RolesGuard } from 'src/user/guards/roles.guard';
-import { PatientService } from 'src/patient/patient.service';
-import { DoctorsRequestService } from 'src/doctors-request/doctors-request.service';
+import { JwtAuthGuard } from '../user/guards/jwt-auth.guard';
+import { Roles } from '../decorator/roles.decorator';
+import { RolesGuard } from '../user/guards/roles.guard';
+import { PatientService } from '../patient/patient.service';
+import { DoctorsRequestService } from '../doctors-request/doctors-request.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UserRole } from 'src/types/types';
+import { UserRole } from '../types/types';
 
 @Controller('users/doctors')
 export class DoctorController {

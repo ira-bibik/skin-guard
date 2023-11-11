@@ -1,6 +1,6 @@
-import { Patient } from 'src/patient/entities/patient.entity';
-import { Product } from 'src/product/entities/product.entity';
-import { UsageTime } from 'src/types/types';
+import { Patient } from '../../patient/entities/patient.entity';
+import { Product } from '../../product/entities/product.entity';
+import { UsageTime } from '../../types/types';
 import {
 	Column,
 	Entity,

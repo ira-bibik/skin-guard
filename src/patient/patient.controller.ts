@@ -18,12 +18,12 @@ import {
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { UpdatePatientDto } from './dto/update-patient.dto';
-import { Roles } from 'src/decorator/roles.decorator';
-import { RolesGuard } from 'src/user/guards/roles.guard';
-import { JwtAuthGuard } from 'src/user/guards/jwt-auth.guard';
-import { ScheduleService } from 'src/schedule/schedule.service';
+import { Roles } from '../decorator/roles.decorator';
+import { RolesGuard } from '../user/guards/roles.guard';
+import { JwtAuthGuard } from '../user/guards/jwt-auth.guard';
+import { ScheduleService } from '../schedule/schedule.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UserRole } from 'src/types/types';
+import { UserRole } from '../types/types';
 
 @Controller('users/patients')
 export class PatientController {

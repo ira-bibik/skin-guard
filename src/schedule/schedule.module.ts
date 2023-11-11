@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Schedule } from './entities/schedule.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PatientModule } from 'src/patient/patient.module';
-import { Product } from 'src/product/entities/product.entity';
+import { PatientModule } from '../patient/patient.module';
+import { Product } from '../product/entities/product.entity';
 
 @Module({
 	imports: [

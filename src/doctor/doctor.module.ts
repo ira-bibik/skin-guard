@@ -5,9 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Doctor } from './entities/doctor.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PatientModule } from 'src/patient/patient.module';
-import { DoctorsRequestModule } from 'src/doctors-request/doctors-request.module';
-import { UploadFilesModule } from 'src/upload-files/upload-files.module';
+import { PatientModule } from '../patient/patient.module';
+import { DoctorsRequestModule } from '../doctors-request/doctors-request.module';
+import { UploadFilesModule } from '../upload-files/upload-files.module';
 
 @Module({
 	imports: [

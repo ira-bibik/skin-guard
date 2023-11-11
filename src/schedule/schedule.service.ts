@@ -6,12 +6,12 @@ import {
 } from '@nestjs/common';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
-import { IUser } from 'src/types/types';
+import { IUser } from '../types/types';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Schedule } from './entities/schedule.entity';
 import { Repository } from 'typeorm';
-import { PatientService } from 'src/patient/patient.service';
-import { Product } from 'src/product/entities/product.entity';
+import { PatientService } from '../patient/patient.service';
+import { Product } from '../product/entities/product.entity';
 
 @Injectable()
 export class ScheduleService {

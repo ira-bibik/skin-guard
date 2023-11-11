@@ -1,5 +1,5 @@
-import { Doctor } from 'src/doctor/entities/doctor.entity';
-import { Patient } from 'src/patient/entities/patient.entity';
+import { Doctor } from '../../doctor/entities/doctor.entity';
+import { Patient } from '../../patient/entities/patient.entity';
 import {
 	Column,
 	CreateDateColumn,
