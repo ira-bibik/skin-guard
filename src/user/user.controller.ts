@@ -21,10 +21,7 @@ import { UserRole } from '../types/types';
 
 @Controller('users')
 export class UserController {
-	constructor(
-		private readonly userService: UserService,
-		
-	) {}
+	constructor(private readonly userService: UserService) {}
 
 	@Post('/login')
 	@UseGuards(LocalAuthGuard)
@@ -54,9 +51,6 @@ export class UserController {
 	getProfile(@Request() req) {
 		return req.user;
 	}
-	///
-
-	
 
 	@Get('/:userId')
 	@Roles(UserRole.ADMIN)
