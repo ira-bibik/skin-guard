@@ -24,7 +24,6 @@ export class ScheduleService {
 	) {}
 
 	async create(dto: CreateScheduleDto, user: IUser) {
-		// make function for this
 		const isPatientExist = await this.patientService.findOne(dto.patientId);
 		if (!isPatientExist)
 			throw new NotFoundException("Patient doesn't exist");
@@ -51,7 +50,6 @@ export class ScheduleService {
 		if (isScheduleExist) {
 			throw new BadRequestException('This schedule already exist');
 		}
-		///
 
 		const newSchedule = await this.scheduleRepository.save({
 			patient: { patientId: dto.patientId },
@@ -129,7 +127,6 @@ export class ScheduleService {
 		const schedule = await this.findOne(id);
 		if (!schedule) throw new NotFoundException("Schedule doesn't exist");
 
-		// make function for this
 		const isAllow = await this.patientService.check(
 			user,
 			schedule.patient.patientId
@@ -158,7 +155,6 @@ export class ScheduleService {
 		if (isScheduleExist) {
 			throw new BadRequestException('This schedule already exists');
 		}
-		///
 
 		await this.scheduleRepository.update(id, updatedSchedule);
 

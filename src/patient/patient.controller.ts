@@ -40,7 +40,7 @@ export class PatientController {
 		@UploadedFile(
 			new ParseFilePipe({
 				validators: [
-					// new MaxFileSizeValidator({ maxSize: 1000 }),
+					new MaxFileSizeValidator({ maxSize: 1000 }),
 					new FileTypeValidator({ fileType: 'image/jpeg' }),
 				],
 			})
@@ -99,7 +99,6 @@ export class PatientController {
 	@Patch('/unsubmit')
 	@Roles(UserRole.PATIENT)
 	@UseGuards(RolesGuard)
-	//@UsePipes(new ValidationPipe())
 	deleteDoctor(@Request() req) {
 		return this.patientService.deleteDoctor(req.user);
 	}

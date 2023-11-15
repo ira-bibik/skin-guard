@@ -24,7 +24,6 @@ export class DoctorService {
 		const patient = await this.findOne(+id);
 		const photoURL = await this.uploadService.uploadFile(fileName, file);
 		await this.doctorRepository.update(id, { photo: photoURL });
-		// return photoURL;
 		return { ...patient, photo: photoURL };
 	}
 

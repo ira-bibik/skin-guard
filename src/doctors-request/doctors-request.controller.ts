@@ -38,19 +38,6 @@ export class DoctorsRequestController {
 		);
 	}
 
-	//is it neccessary?
-	@Get()
-	findAll() {
-		return this.doctorsRequestService.findAll();
-	}
-
-	// @Get('myOwn')
-	// @Roles(UserRole.DOCTOR)
-	// @UseGuards(RolesGuard)
-	// findRequestByDoctorId(@Request() req) {
-	// 	return this.doctorsRequestService.findRequestByDoctorId(req.user);
-	// }
-
 	@Patch(':id')
 	@Roles(UserRole.DOCTOR)
 	@UseGuards(RolesGuard)

@@ -30,7 +30,6 @@ export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
 	@Post()
-	//@UseGuards(JwtAuthGuard)
 	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)
 	@UsePipes(new ValidationPipe())
@@ -45,7 +44,7 @@ export class ProductController {
 	async uploadFile(
 		@UploadedFile(new ParseFilePipe({
 			validators: [
-				//new MaxFileSizeValidator({ maxSize: 1000 }),
+				new MaxFileSizeValidator({ maxSize: 1000 }),
 				new FileTypeValidator({fileType: 'image/jpeg'})
 			] }))
 		file: Express.Multer.File,
@@ -64,7 +63,6 @@ export class ProductController {
 	}
 
 	@Get('filter')
-	// @UseGuards(JwtAuthGuard)
 	filterProducts(
 		@Query('brands') brands: string,
 		@Query('skinTypes') skinTypes: string,

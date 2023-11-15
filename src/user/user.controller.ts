@@ -45,13 +45,6 @@ export class UserController {
 		return this.userService.findAll(+page, +limit);
 	}
 
-	//profile(getMe) it's not neccessary
-	@UseGuards(JwtAuthGuard)
-	@Get('profile')
-	getProfile(@Request() req) {
-		return req.user;
-	}
-
 	@Get('/:userId')
 	@Roles(UserRole.ADMIN)
 	@UseGuards(RolesGuard)

@@ -45,7 +45,6 @@ export class ProductService {
 		const product = await this.findOneById(+id);
 		const photoURL = await this.uploadService.uploadFile(fileName, file);
 		await this.productRepository.update(id, { photo: photoURL });
-		// return photoURL;
 		return { ...product, photo: photoURL };
 	}
 

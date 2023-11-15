@@ -24,7 +24,6 @@ export class PatientService {
 		const patient = await this.findOne(+id); 
 		const photoURL = await this.uploadService.uploadFile(fileName, file);
 		await this.patientRepository.update(id, { photo: photoURL });
-		// return photoURL;
 		return { ...patient, photo: photoURL };
 	}
 
@@ -35,7 +34,6 @@ export class PatientService {
 			);
 		}
 		const [patients, total] = await this.patientRepository.findAndCount({
-			// relations: { user: true },
 			relations: { doctor: true },
 			take: limit,
 			skip: (page - 1) * limit,
