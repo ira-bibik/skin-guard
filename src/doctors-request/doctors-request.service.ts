@@ -72,6 +72,21 @@ export class DoctorsRequestService {
 		});
 	}
 
+	async findRequestByPatientId(user: IUser) {
+		const request = await this.requestsRepository.findOne({
+			where: { patient: { patientId: +user.idByRole } },
+			relations: {
+				doctor: true,
+			},
+		});
+
+		if (!request) {
+			throw new NotFoundException("You don't have request");
+		}
+
+		return request;
+	}
+
 	async findOne(requestId: number) {
 		return await this.requestsRepository.findOne({
 			where: { requestId },

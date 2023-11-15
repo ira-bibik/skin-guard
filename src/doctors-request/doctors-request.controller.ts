@@ -38,6 +38,13 @@ export class DoctorsRequestController {
 		);
 	}
 
+	@Get()
+	@Roles(UserRole.PATIENT)
+	@UseGuards(RolesGuard)
+	findOne(@Request() req) {
+		return this.doctorsRequestService.findRequestByPatientId(req.user);
+	}
+
 	@Patch(':id')
 	@Roles(UserRole.DOCTOR)
 	@UseGuards(RolesGuard)
