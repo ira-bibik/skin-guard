@@ -1,5 +1,5 @@
-import { IsEmail, IsIn, IsNotEmpty, IsString } from "class-validator";
-import { UserRole } from "../../types/types";
+import { IsEmail, IsIn, IsNotEmpty, IsString, Min } from 'class-validator';
+import { UserRole } from '../../types/types';
 
 export class CreateUserDto {
 	@IsNotEmpty()
@@ -8,6 +8,9 @@ export class CreateUserDto {
 
 	@IsNotEmpty()
 	@IsString()
+	@Min(6, {
+		message: 'Password must be at least 6 characters',
+	})
 	readonly password: string;
 
 	@IsNotEmpty()
