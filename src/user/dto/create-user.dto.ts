@@ -1,4 +1,4 @@
-import { IsEmail, IsIn, IsNotEmpty, IsString, Min } from 'class-validator';
+import { IsEmail, IsIn, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { UserRole } from '../../types/types';
 
 export class CreateUserDto {
@@ -8,7 +8,7 @@ export class CreateUserDto {
 
 	@IsNotEmpty()
 	@IsString()
-	@Min(6, {
+	@MinLength(6, {
 		message: 'Password must be at least 6 characters',
 	})
 	readonly password: string;
