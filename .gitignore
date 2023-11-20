@@ -1,8 +1,8 @@
 # compiled output
 /server/dist
 /server/node_modules
-/server.env
-/server.backup.sql
+/server/.env
+/server/.backup.sql
 
 # Logs
 logs
