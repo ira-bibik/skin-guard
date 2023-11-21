@@ -1,16 +1,21 @@
 .headerContainer {
 	height: 60px;
-	background-color: var(--primary);
+	border: 1px solid var(--primary);
+	border-radius: 10px;
 	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 5px 0px;
-	width: 100%;
+	/* width: 95%; */
+	margin: 10px;
+	box-shadow: 8px 8px 60px -27px rgba(0, 0, 0, 0.88);
+	-webkit-box-shadow: 8px 8px 60px -27px rgba(0, 0, 0, 0.88);
+	-moz-box-shadow: 8px 8px 60px -27px rgba(0, 0, 0, 0.88);
 }
 
 .headerContainer a {
-	color: white;
+	color: var(--primary);
 }
 
 .logo {

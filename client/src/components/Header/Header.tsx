@@ -3,27 +3,37 @@ import './Header.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-enum Role {
-	ADMIN = 'admin',
-	PATIENT = 'patient',
-	DOCTOR = 'doctor',
-}
+import { useAuth } from '../../hooks/isAuth';
+import { useAppDispatch } from '../../store/hooks';
+import { removeTokenFromLocalStorage } from '../../helper/localstorage.helper';
+import { logout } from '../../store/user/userSlice';
+import { toast } from 'react-toastify';
+import { useRole } from '../../hooks/getRole';
+import { Role } from '../../types/types';
 
 const Header: FC = () => {
-	//get from redux
-	const isAuth = true;
-	const [role, setRole] = useState<Role>(Role.DOCTOR);
-
+	const isAuth = useAuth();
+	const role = useRole();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const logoutHandler = () => {
+		setAnchorEl(null);
+		dispatch(logout());
+		removeTokenFromLocalStorage('token');
+		toast.success('You logged out.');
+	};
+
 	return (
 		<header className="headerContainer">
 			{/* LOGO */}
@@ -98,7 +108,7 @@ const Header: FC = () => {
 								</MenuItem>
 							</>
 						)}
-						<MenuItem onClick={handleClose}>
+						<MenuItem onClick={logoutHandler}>
 							<Link to={'/'} className="menuItem">
 								<p>Logout</p>
 							</Link>
