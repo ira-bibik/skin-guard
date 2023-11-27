@@ -32,6 +32,24 @@ export interface AuthFormValues {
 	role?: Role;
 }
 
+export interface IProductData {
+	productId: number;
+	name: string;
+	productType: string;
+	brand: string;
+	ingredients: string;
+	skinType: string[];
+	description?: string;
+	amount: string;
+	photo?: string; 
+}
+
+export interface IProductsResponseData {
+	products: IProductData[];
+	totalPages: number;
+	currentPage: number;
+}
+
 //getProfile response
 //     {
 //     "patientId": 16,

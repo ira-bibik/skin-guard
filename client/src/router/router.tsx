@@ -10,7 +10,7 @@ import Schedule from '../pages/Schedule';
 import Patients from '../pages/Patients';
 import Requests from '../pages/Requests';
 import Doctors from '../pages/Doctors';
-import Products from '../pages/Products';
+import Products, { productsLoader } from '../pages/Products';
 import UserPage from '../pages/UserPage';
 import Product from '../pages/Product';
 import Doctor from '../pages/Doctor';
@@ -77,6 +77,7 @@ export const router = createBrowserRouter([
 			{
 				path: 'products/*',
 				element: <Products />,
+				loader: productsLoader
 			},
 			{
 				path: 'products/:productId',

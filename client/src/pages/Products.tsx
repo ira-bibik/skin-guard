@@ -1,7 +1,30 @@
 import { FC } from 'react';
+import { ProductService } from '../services/ProductService';
+import AddIcon from '@mui/icons-material/Add';
+import { ProductsTable } from '../components/Products';
+import { Fab } from '@mui/material';
+import { useRole } from '../hooks/getRole';
+import { useAuth } from '../hooks/isAuth';
+import { Role } from '../types/types';
+
+export const productsLoader = async () => {
+	const data = await ProductService.getAllProducts();
+	return data;
+};
 
 const Products: FC = () => {
-	return <div>Products</div>;
+	const role = useRole();
+	console.log(role);
+	return (
+		<>
+			<ProductsTable />
+			{role === Role.ADMIN && (
+				<Fab color="secondary" aria-label="add">
+					<AddIcon />
+				</Fab>
+			)}
+		</>
+	);
 };
 
 export default Products;

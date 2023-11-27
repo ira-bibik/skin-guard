@@ -1,0 +1,18 @@
+.productsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.productCardContent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardActionButtons {
+   justify-content: space-between;
+}
