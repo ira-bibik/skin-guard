@@ -4,7 +4,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { ProductsTable } from '../components/Products';
 import { Fab } from '@mui/material';
 import { useRole } from '../hooks/getRole';
-import { useAuth } from '../hooks/isAuth';
 import { Role } from '../types/types';
 
 export const productsLoader = async () => {
@@ -14,7 +13,6 @@ export const productsLoader = async () => {
 
 const Products: FC = () => {
 	const role = useRole();
-	console.log(role);
 	return (
 		<>
 			<ProductsTable />
