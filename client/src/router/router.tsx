@@ -5,7 +5,7 @@ import ErrorPage from '../pages/ErrorPage';
 import Users from '../pages/Users';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-import Profile from '../pages/Profile';
+import Profile, { profileLoader } from '../pages/Profile';
 import Schedule from '../pages/Schedule';
 import Patients from '../pages/Patients';
 import Requests from '../pages/Requests';
@@ -13,8 +13,8 @@ import Doctors from '../pages/Doctors';
 import Products, { productsLoader } from '../pages/Products';
 import UserPage from '../pages/UserPage';
 import Product from '../pages/Product';
-import Doctor from '../pages/Doctor';
-import Patient from '../pages/Patient';
+import Doctor, { doctorLoader } from '../pages/Doctor';
+import Patient, { patientLoader } from '../pages/Patient';
 
 export const router = createBrowserRouter([
 	{
@@ -37,6 +37,7 @@ export const router = createBrowserRouter([
 			{
 				path: 'me',
 				element: <Profile />,
+				loader: profileLoader,
 			},
 			{
 				path: 'me/schedule',
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
 			{
 				path: 'me/patients/:patientId',
 				element: <Patient />,
+				loader: patientLoader,
 			},
 			{
 				path: 'me/patients/:patientId/schedule',
@@ -73,11 +75,12 @@ export const router = createBrowserRouter([
 			{
 				path: 'doctors/:doctorId',
 				element: <Doctor />,
+				loader: doctorLoader,
 			},
 			{
 				path: 'products/*',
 				element: <Products />,
-				loader: productsLoader
+				loader: productsLoader,
 			},
 			{
 				path: 'products/:productId',

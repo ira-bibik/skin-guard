@@ -29,8 +29,8 @@ const Header: FC = () => {
 
 	const logoutHandler = () => {
 		setAnchorEl(null);
-		dispatch(logout());
 		removeTokenFromLocalStorage('token');
+		dispatch(logout());
 		toast.success('You logged out.');
 	};
 

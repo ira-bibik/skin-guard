@@ -50,31 +50,33 @@ export interface IProductsResponseData {
 	currentPage: number;
 }
 
-//getProfile response
-//     {
-//     "patientId": 16,
-//     "name": "Ivan",
-//     "age": 18,
-//     "skinType": "oily",
-//     "photo": null,
-//     "schedule": [],
-//     "doctor": null
-// }
+export interface IPatientData {
+	patientId: number;
+	name?: string;
+	age?: number;
+	skinType?: string;
+	photo?: string;
+	schedule?: IScheduleData[];
+	doctor?: IDoctorData;
+}
 
-//     {
-//     "doctorId": 10,
-//     "name": "Updated doctor",
-//     "work": "ONClinic",
-//     "specialization": "dermatologist",
-//     "description": null,
-//     "photo": null,
-//     "patients": [
-//         {
-//             "patientId": 17,
-//             "name": "Nadia",
-//             "age": 25,
-//             "skinType": "dry",
-//             "photo": null
-//         }
-//     ]
-// }
+export interface IDoctorData {
+	doctorId: number;
+	name?: string;
+	work?: string;
+	specialization?: string;
+	description?: string;
+	photo?: string;
+	patients?: IPatientData[];
+}
+
+
+export interface IScheduleData {
+	scheduleId: number;
+	time: 'morning' | 'evening';
+	description?: string;
+	product: IProductData;
+}
+
+
+

@@ -1,5 +1,13 @@
 import { instance } from '../api/axios.api';
-import {  ILoginUserData, IRegisterUserData, IResponseUserData, IUser, Role } from '../types/types';
+import {
+	IDoctorData,
+	ILoginUserData,
+	IPatientData,
+	IRegisterUserData,
+	IResponseUserData,
+	IUser,
+	Role,
+} from '../types/types';
 
 export const AuthService = {
 	async registration(
@@ -22,10 +30,12 @@ export const AuthService = {
 		return data;
 	},
 
-	// to do type for response
-
-	async getProfile(role: Role | undefined): Promise<any> {
-		const { data } = await instance.get<IUser>(`${role}s/profile`);
+	async getProfile(
+		role: Role | undefined
+	): Promise<IPatientData | IDoctorData | undefined> {
+		const { data } = await instance.get<
+			IPatientData | IDoctorData | undefined
+		>(`users/${role}s/me`);
 		if (data) return data;
 	},
 };

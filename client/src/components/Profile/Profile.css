@@ -1,0 +1,35 @@
+.profileContainer {
+	position: relative;
+	width: 90%;
+	margin: 50px auto;
+	border-radius: 10px;
+	box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.25);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 50px;
+	gap: 50px;
+}
+
+.avatar {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.infoBlock {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	width: 75%;
+}
+
+/* .infoBlockItem {
+} */
+
+.editButton {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}
