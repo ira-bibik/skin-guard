@@ -44,3 +44,13 @@
 	padding: 50px;
 	justify-content: space-between;
 }
+
+.doctorDeleteContainer {
+	display: flex;
+	align-items: center;
+}
+
+.doctorDeleteContainer h3:hover, .scheduleBlock .productLink:hover {
+	cursor:pointer;
+	text-decoration: underline;
+}

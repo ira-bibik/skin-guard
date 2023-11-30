@@ -6,27 +6,21 @@ import { getTokenFromLocalStorage } from './helper/localstorage.helper';
 import { AuthService } from './services/AuthService';
 import { useAppDispatch } from './store/hooks';
 import { login, logout } from './store/user/userSlice';
-import { useRole } from './hooks/getRole';
+import { getRole } from './helper/getRole.helper';
 
 const App: FC = () => {
 	const dispatch = useAppDispatch();
-	const role = useRole();
 	const checkAuth = async () => {
 		const token = getTokenFromLocalStorage();
 		try {
-			// if (token && role) {
-			// 	const data = await AuthService.getProfile(role);
-			// 	if (data) {
-			// 		//замінити login на функцію, що встановлює інформацію про юзера
-			// 		dispatch(login({access_token: token}));
-			// 	} else {
-			// 		dispatch(logout());
-			// 	}
-			// }
 			if (token) {
-				dispatch(login({ access_token: token }));
-			} else {
-				dispatch(logout());
+				const role = getRole();
+				const data = await AuthService.getProfile(role);
+				if (data) {
+					dispatch(login({ access_token: token }));
+				} else {
+					dispatch(logout());
+				}
 			}
 		} catch (err: any) {
 			const error = err.response?.data.message;

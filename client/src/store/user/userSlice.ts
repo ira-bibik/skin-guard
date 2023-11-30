@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import { IResponseUserData, IUser } from '../../types/types';
-import { parseJwt } from '../../helper/localstorage.helper';
+import {
+	parseJwt,
+	setTokenToLocalStorage,
+} from '../../helper/localstorage.helper';
 
 interface UserState {
 	user: IUser | null;
@@ -19,19 +22,20 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {
 		login: (state, action: PayloadAction<IResponseUserData>) => {
-            const token = action.payload.access_token;
-            const {userId, email, role, idByRole} = parseJwt(token);
-            state.user = { userId , email, role, idByRole};
-//{
-//   "userId": 24,
-//   "email": "patientexample@gmail.com",
-//   "role": "patient",
-//   "idByRole": 16,
-//   "iat": 1700554410,
-//   "exp": 1700558010
-// }
+			const token = action.payload.access_token;
+			const { userId, email, role, idByRole } = parseJwt(token);
+			setTokenToLocalStorage(token);
+			state.user = { userId, email, role, idByRole };
+			//{
+			//   "userId": 24,
+			//   "email": "patientexample@gmail.com",
+			//   "role": "patient",
+			//   "idByRole": 16,
+			//   "iat": 1700554410,
+			//   "exp": 1700558010
+			// }
 			state.isAuth = true;
-        },
+		},
 		logout: (state) => {
 			state.isAuth = false;
 			state.user = null;

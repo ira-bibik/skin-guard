@@ -29,7 +29,7 @@ const Header: FC = () => {
 
 	const logoutHandler = () => {
 		setAnchorEl(null);
-		removeTokenFromLocalStorage('token');
+		removeTokenFromLocalStorage();
 		dispatch(logout());
 		toast.success('You logged out.');
 	};

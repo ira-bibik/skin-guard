@@ -5,7 +5,6 @@ import {
 	IPatientData,
 	IRegisterUserData,
 	IResponseUserData,
-	IUser,
 	Role,
 } from '../types/types';
 
@@ -35,7 +34,7 @@ export const AuthService = {
 	): Promise<IPatientData | IDoctorData | undefined> {
 		const { data } = await instance.get<
 			IPatientData | IDoctorData | undefined
-		>(`users/${role}s/me`);
-		if (data) return data;
+			>(`users/${role}s/me`);
+		if (data?.name) return data;
 	},
 };

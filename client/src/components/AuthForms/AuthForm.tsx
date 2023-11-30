@@ -30,7 +30,7 @@ export const AuthForm: FC<AuthFormProps> = (props) => {
 					? await AuthService.login(values)
 					: await AuthService.registration(values);
 			if (data) {
-				setTokenToLocalStorage('token', data.access_token);
+				setTokenToLocalStorage(data.access_token);
 				dispatch(login(data));
 				toast.success(
 					props.type === 'login'

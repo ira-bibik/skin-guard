@@ -15,6 +15,7 @@ import UserPage from '../pages/UserPage';
 import Product from '../pages/Product';
 import Doctor, { doctorLoader } from '../pages/Doctor';
 import Patient, { patientLoader } from '../pages/Patient';
+import EditProfile from '../pages/EditProfile';
 
 export const router = createBrowserRouter([
 	{
@@ -38,6 +39,12 @@ export const router = createBrowserRouter([
 				path: 'me',
 				element: <Profile />,
 				loader: profileLoader,
+				children: [
+					{
+						path: 'edit',
+						element: <EditProfile />,
+					},
+				],
 			},
 			{
 				path: 'me/schedule',

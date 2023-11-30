@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import './Profile.css';
 import { IDoctorData, IPatientData, Role } from '../../types/types';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { PhotoBlock } from './PhotoBlock';
 import { PatientInfo } from './PatientInfo';
 import { DoctorInfo } from './DoctorInfo';
@@ -11,24 +11,24 @@ import { Schedule } from './Schedule';
 
 export interface UserProfileProps {
 	actionsButtons?: boolean;
-  isScheduleVisible?: boolean;
-  role: Role
+	isScheduleVisible?: boolean;
+	role: Role;
 }
 
 export const UserProfile: FC<UserProfileProps> = ({
 	actionsButtons = false,
-  isScheduleVisible = false,
-  role
+	isScheduleVisible = false,
+	role,
 }) => {
 	const data = useLoaderData() as IPatientData | IDoctorData;
-	console.log(data);
+	const navigate = useNavigate();
 	return (
 		<>
 			<div className="profileContainer">
 				<PhotoBlock photo={data.photo} />
 				<div className="infoBlock">
 					{role === Role.PATIENT && (
-						<PatientInfo {...(data as IPatientData)} />
+						<PatientInfo {...(data as IPatientData)} actionsButtons={actionsButtons} />
 					)}
 					{role === Role.DOCTOR && (
 						<DoctorInfo {...(data as IDoctorData)} />
@@ -36,7 +36,10 @@ export const UserProfile: FC<UserProfileProps> = ({
 				</div>
 				{actionsButtons && (
 					<div className="editButton">
-						<IconButton aria-label="add to favorites">
+						<IconButton
+							aria-label="add to favorites"
+							onClick={() => navigate('edit')}
+						>
 							<EditOutlinedIcon />
 						</IconButton>
 					</div>

@@ -60,6 +60,13 @@ export interface IPatientData {
 	doctor?: IDoctorData;
 }
 
+export interface IEditPatientData {
+	patientId: number;
+	name?: string;
+	age?: number;
+	skinType?: string;
+}
+
 export interface IDoctorData {
 	doctorId: number;
 	name?: string;
@@ -70,12 +77,24 @@ export interface IDoctorData {
 	patients?: IPatientData[];
 }
 
+export interface IEditDoctorData {
+	doctorId: number;
+	name?: string;
+	work?: string;
+	specialization?: string;
+	description?: string;
+}
+
 
 export interface IScheduleData {
 	scheduleId: number;
 	time: 'morning' | 'evening';
 	description?: string;
 	product: IProductData;
+}
+
+export interface IResponseWithMessageData{
+	message: string;
 }
 
 
