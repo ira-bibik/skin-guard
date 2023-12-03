@@ -23,7 +23,6 @@ export const EditDoctorProfile: FC<EditDoctorProfileProps> = ({ data }) => {
 	const navigate = useNavigate();
 	const editDoctor = async (values: IEditDoctorData) => {
 		try {
-			console.log('i work');
 			const data = await DoctorService.editProfile(values);
 			toast.success(data.message);
 			navigate('/me');

@@ -61,16 +61,16 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
 				</Button>
 				<Box>
 					{(role === Role.DOCTOR || role === Role.PATIENT) && (
-						<IconButton aria-label="add to favorites">
+						<IconButton aria-label="add to schedule">
 							<AddOutlinedIcon />
 						</IconButton>
 					)}
 					{role === Role.ADMIN && (
 						<>
-							<IconButton aria-label="add to favorites">
+							<IconButton aria-label="edit product">
 								<EditOutlinedIcon />
 							</IconButton>
-							<IconButton aria-label="add to favorites">
+							<IconButton aria-label="delete product">
 								<DeleteOutlinedIcon />
 							</IconButton>
 						</>

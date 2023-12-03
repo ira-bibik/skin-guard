@@ -1,7 +1,29 @@
-import { instance } from "../api/axios.api";
-import { IDoctorData, IEditDoctorData, IResponseWithMessageData } from "../types/types";
+import { instance } from '../api/axios.api';
+import {
+	IDoctorData,
+	IDoctorsResponseData,
+	IEditDoctorData,
+	IResponseWithMessageData,
+} from '../types/types';
 
 export const DoctorService = {
+	async getAllDoctors(
+		page: number = 1,
+		limit: number = 4
+	): Promise<IDoctorsResponseData> {
+		const params = {
+			page,
+			limit,
+		};
+		const { data } = await instance.get<IDoctorsResponseData>(
+			'users/doctors/all',
+			{
+				params,
+			}
+		);
+		return data;
+	},
+
 	async findById(doctorId: string | undefined) {
 		const { data } = await instance.get<IDoctorData>(
 			`users/doctors/${doctorId}`

@@ -9,13 +9,14 @@ import Profile, { profileLoader } from '../pages/Profile';
 import Schedule from '../pages/Schedule';
 import Patients from '../pages/Patients';
 import Requests from '../pages/Requests';
-import Doctors from '../pages/Doctors';
+import Doctors, { doctorsLoader } from '../pages/Doctors';
 import Products, { productsLoader } from '../pages/Products';
 import UserPage from '../pages/UserPage';
 import Product from '../pages/Product';
 import Doctor, { doctorLoader } from '../pages/Doctor';
 import Patient, { patientLoader } from '../pages/Patient';
 import EditProfile from '../pages/EditProfile';
+import CreateRequest from '../pages/CreateRequest';
 
 export const router = createBrowserRouter([
 	{
@@ -78,6 +79,13 @@ export const router = createBrowserRouter([
 			{
 				path: 'doctors',
 				element: <Doctors />,
+				loader: doctorsLoader,
+				children: [
+					{
+						path: 'createRequest',
+						element: <CreateRequest />,
+					},
+				],
 			},
 			{
 				path: 'doctors/:doctorId',

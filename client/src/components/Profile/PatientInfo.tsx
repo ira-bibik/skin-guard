@@ -50,7 +50,10 @@ export const PatientInfo: FC<PatientInfoProps> = ({
 				<p>Doctor:</p>
 				<div className="doctorDeleteContainer">
 					<h3
-						onClick={() => navigate(`/doctors/${doctor?.doctorId}`)}
+						onClick={() =>
+							doctor?.name &&
+							navigate(`/doctors/${doctor?.doctorId}`)
+						}
 					>
 						{doctor?.name || 'No data'}
 					</h3>

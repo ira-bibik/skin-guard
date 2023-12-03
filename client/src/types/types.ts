@@ -77,6 +77,12 @@ export interface IDoctorData {
 	patients?: IPatientData[];
 }
 
+export interface IDoctorsResponseData {
+	doctors: IDoctorData[];
+	totalPages: number;
+	currentPage: number;
+}
+
 export interface IEditDoctorData {
 	doctorId: number;
 	name?: string;
@@ -96,6 +102,11 @@ export interface IScheduleData {
 export interface IResponseWithMessageData{
 	message: string;
 }
+
+export interface IRequestData {
+	doctorId: number;
+	coverletter: string;
+} 
 
 
 

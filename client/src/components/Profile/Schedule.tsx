@@ -49,10 +49,10 @@ export const Schedule: FC<ScheduleProps> = ({ schedule }) => {
 							<h3>{el.description || 'No description'}</h3>
 						</div>
 						<div>
-							<IconButton aria-label="add to favorites">
+							<IconButton aria-label="edit">
 								<EditOutlinedIcon />
 							</IconButton>
-							<IconButton aria-label="add to favorites">
+							<IconButton aria-label="delete">
 								<DeleteOutlinedIcon />
 							</IconButton>
 						</div>
