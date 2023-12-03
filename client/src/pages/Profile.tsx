@@ -21,6 +21,7 @@ export const profileLoader = async () => {
 const Profile: FC = () => {
 	const role = getRole();
 	const data = useLoaderData() as IPatientData | IDoctorData;
+
 	return (
 		<>
 			<UserProfile

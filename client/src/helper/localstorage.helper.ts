@@ -1,14 +1,18 @@
+import { instance } from '../api/axios.api';
+
 export function getTokenFromLocalStorage(): string {
 	const data = localStorage.getItem('token');
-	const token: string = data ? JSON.parse(data) : '';
+	const token: string = data ? data : '';
 	return token;
 }
 
-export function setTokenToLocalStorage( token: string): void {
-	localStorage.setItem('token', JSON.stringify(token));
+export function setTokenToLocalStorage(token: string): void {
+	instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+	localStorage.setItem('token', token);
 }
 
 export function removeTokenFromLocalStorage(): void {
+	delete instance.defaults.headers.common['Authorization'];
 	localStorage.removeItem('token');
 }
 

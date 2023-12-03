@@ -4,6 +4,7 @@ import type { RootState } from '../store';
 import { IResponseUserData, IUser } from '../../types/types';
 import {
 	parseJwt,
+	removeTokenFromLocalStorage,
 	setTokenToLocalStorage,
 } from '../../helper/localstorage.helper';
 
@@ -24,16 +25,7 @@ export const userSlice = createSlice({
 		login: (state, action: PayloadAction<IResponseUserData>) => {
 			const token = action.payload.access_token;
 			const { userId, email, role, idByRole } = parseJwt(token);
-			setTokenToLocalStorage(token);
 			state.user = { userId, email, role, idByRole };
-			//{
-			//   "userId": 24,
-			//   "email": "patientexample@gmail.com",
-			//   "role": "patient",
-			//   "idByRole": 16,
-			//   "iat": 1700554410,
-			//   "exp": 1700558010
-			// }
 			state.isAuth = true;
 		},
 		logout: (state) => {

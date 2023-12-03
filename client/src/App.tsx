@@ -10,6 +10,7 @@ import { getRole } from './helper/getRole.helper';
 
 const App: FC = () => {
 	const dispatch = useAppDispatch();
+
 	const checkAuth = async () => {
 		const token = getTokenFromLocalStorage();
 		try {
@@ -21,10 +22,11 @@ const App: FC = () => {
 				} else {
 					dispatch(logout());
 				}
+			} else {
 			}
 		} catch (err: any) {
 			const error = err.response?.data.message;
-			toast.error(error.toString());
+			toast.error(error);
 		}
 	};
 
