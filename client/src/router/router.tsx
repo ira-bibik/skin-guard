@@ -7,7 +7,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile, { profileLoader } from '../pages/Profile';
 import Schedule from '../pages/Schedule';
-import Patients from '../pages/Patients';
+import Patients, { ownPatientsLoader } from '../pages/Patients';
 import Requests from '../pages/Requests';
 import Doctors, { doctorsLoader } from '../pages/Doctors';
 import Products, { productsLoader } from '../pages/Products';
@@ -54,6 +54,7 @@ export const router = createBrowserRouter([
 			{
 				path: 'me/patients',
 				element: <Patients />,
+				loader: ownPatientsLoader,
 			},
 			{
 				path: 'me/patients/:patientId',

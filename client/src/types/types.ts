@@ -91,6 +91,12 @@ export interface IEditDoctorData {
 	description?: string;
 }
 
+export interface IOwnPatientsResponseData {
+	patients: IPatientData[];
+	totalPages: number;
+	currentPage: number;
+}
+
 
 export interface IScheduleData {
 	scheduleId: number;

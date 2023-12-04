@@ -3,6 +3,7 @@ import {
 	IDoctorData,
 	IDoctorsResponseData,
 	IEditDoctorData,
+	IOwnPatientsResponseData,
 	IResponseWithMessageData,
 } from '../types/types';
 
@@ -35,6 +36,13 @@ export const DoctorService = {
 		const { data } = await instance.patch<IResponseWithMessageData>(
 			'users/doctors',
 			chabgedData
+		);
+		return data;
+	},
+
+	async getOwnPatients() {
+		const { data } = await instance.get<IOwnPatientsResponseData>(
+			'users/doctors/me/patients'
 		);
 		return data;
 	},
