@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '../schedule/schedule.module';
 import { UploadFilesModule } from '../upload-files/upload-files.module';
+import { MqttService } from './mqtt.service';
 
 @Module({
 	imports: [
@@ -23,7 +24,7 @@ import { UploadFilesModule } from '../upload-files/upload-files.module';
 		UploadFilesModule
 	],
 	controllers: [PatientController],
-	providers: [PatientService],
+	providers: [PatientService, MqttService],
 	exports: [PatientService],
 })
 export class PatientModule {}

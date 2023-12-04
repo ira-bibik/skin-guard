@@ -24,12 +24,14 @@ import { JwtAuthGuard } from '../user/guards/jwt-auth.guard';
 import { ScheduleService } from '../schedule/schedule.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserRole } from '../types/types';
+import { MqttService } from './mqtt.service';
 
 @Controller('users/patients')
 export class PatientController {
 	constructor(
 		private readonly patientService: PatientService,
-		private readonly scheduleService: ScheduleService
+		private readonly scheduleService: ScheduleService,
+		private readonly mqttService: MqttService
 	) {}
 
 	@Post('uploadPhoto')
@@ -55,6 +57,12 @@ export class PatientController {
 		);
 	}
 
+	@Get('topic')
+	getTopic(): string {
+		const data = this.mqttService.publish('NewTopiс/SkinGuard/123', 'Hello world');
+		console.log(data);
+		return 'Published';
+	}
 
 	@Get('all')
 	@Roles(UserRole.ADMIN)
