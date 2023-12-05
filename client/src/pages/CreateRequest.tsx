@@ -3,7 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
-import { IRequestData } from '../types/types';
+import { ISendRequestData } from '../types/types';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { RequestService } from '../services/RequestServie';
@@ -24,7 +24,7 @@ const CreateRequest: FC = () => {
 	const context = useOutletContext() as CreateRequestOutletContext;
 	const navigate = useNavigate();
 
-	const initialValues: IRequestData = {
+	const initialValues: ISendRequestData = {
 		coverletter: '',
 		doctorId: context.doctorId,
 	};
@@ -34,9 +34,8 @@ const CreateRequest: FC = () => {
 		navigate(-1);
 	};
 
-	const createRequest = async (values: IRequestData) => {
+	const createRequest = async (values: ISendRequestData) => {
 		try {
-			console.log(values);
 			const data = await RequestService.createRequest(values);
 			toast.success(data.message);
 			navigate(-1);

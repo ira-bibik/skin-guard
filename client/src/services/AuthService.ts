@@ -35,6 +35,6 @@ export const AuthService = {
 		const { data } = await instance.get<
 			IPatientData | IDoctorData | undefined
 			>(`users/${role}s/me`);
-		if (data?.name) return data;
+		return data;
 	},
 };

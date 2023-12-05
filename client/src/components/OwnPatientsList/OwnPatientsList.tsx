@@ -7,10 +7,9 @@ import { PatientItem } from './PatientItem';
 
 export const OwnPatientsList: FC = () => {
 	const { patients } = useLoaderData() as IOwnPatientsResponseData;
-	console.log(patients);
 	return (
 		<div className="patientsGrid">
-			{patients.length && (
+			{patients.length ? (
 				<Grid container spacing={4}>
 					{patients.map((patient) => (
 						<Grid
@@ -24,7 +23,7 @@ export const OwnPatientsList: FC = () => {
 						</Grid>
 					))}
 				</Grid>
-			)}
+			) : <h1>No data!</h1>}
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import './DoctorsList.css';
 import { IDoctorData, Role } from '../../types/types';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/isAuth';
 import { useRole } from '../../hooks/getRole';
 import { IconButton, Tooltip } from '@mui/material';

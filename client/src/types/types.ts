@@ -109,10 +109,16 @@ export interface IResponseWithMessageData{
 	message: string;
 }
 
-export interface IRequestData {
+export interface ISendRequestData {
 	doctorId: number;
 	coverletter: string;
 } 
+
+export interface IRequestData {
+	coverletter: string;
+	requestId: number;
+	patient: IPatientData;
+}
 
 
 
