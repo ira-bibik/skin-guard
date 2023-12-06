@@ -55,7 +55,7 @@ export class ScheduleService {
 			patient: { patientId: dto.patientId },
 			product: { productId: dto.productId },
 			time: dto.time,
-			descriptio: dto?.description,
+			description: dto?.description,
 		});
 		if (!newSchedule)
 			throw new BadRequestException('Something went wrong...');

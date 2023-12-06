@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { ProductCard } from './ProductCard';
 import { IProductData, IProductsResponseData } from '../../types/types';
-import { useLoaderData, useSearchParams } from 'react-router-dom';
+import { Outlet, useLoaderData, useSearchParams } from 'react-router-dom';
 import {
 	FormControl,
 	Grid,
@@ -21,6 +21,7 @@ export const ProductsTable: FC = () => {
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [data, setData] = useState<IProductData[]>(products);
+	const [productOutlet, setProductOutlet] = useState<IProductData>();
 	const [currentPage, setCurrentPage] = useState<number>(
 		parseInt(searchParams.get('page') || '1')
 	);
@@ -58,61 +59,67 @@ export const ProductsTable: FC = () => {
 	};
 
 	return (
-		<div className="productsGrid">
-			<FormControl
-				sx={{ alignSelf: 'flex-start', width: '500px' }}
-				variant="standard"
-			>
-				<InputLabel htmlFor="search">Search</InputLabel>
-				<Input
-					id="search"
-					type="text"
-					value={searchValue}
-					onChange={(e) => setSearchValue(e.target.value)}
-					endAdornment={
-						<InputAdornment position="end">
-							<IconButton
-								aria-label="toggle password visibility"
-								onClick={handleClickSearch}
+		<>
+			<div className="productsGrid">
+				<FormControl
+					sx={{ alignSelf: 'flex-start', width: '500px' }}
+					variant="standard"
+				>
+					<InputLabel htmlFor="search">Search</InputLabel>
+					<Input
+						id="search"
+						type="text"
+						value={searchValue}
+						onChange={(e) => setSearchValue(e.target.value)}
+						endAdornment={
+							<InputAdornment position="end">
+								<IconButton
+									aria-label="toggle password visibility"
+									onClick={handleClickSearch}
+								>
+									<SearchOutlinedIcon />
+								</IconButton>
+								<IconButton
+									aria-label="toggle password visibility"
+									onClick={handleClickClear}
+								>
+									<ClearOutlinedIcon />
+								</IconButton>
+							</InputAdornment>
+						}
+					/>
+				</FormControl>
+				{data.length ? (
+					<Grid container spacing={2}>
+						{data.map((product) => (
+							<Grid
+								item
+								key={product.productId}
+								xs={12}
+								sm={6}
+								md={4}
 							>
-								<SearchOutlinedIcon />
-							</IconButton>
-							<IconButton
-								aria-label="toggle password visibility"
-								onClick={handleClickClear}
-							>
-								<ClearOutlinedIcon />
-							</IconButton>
-						</InputAdornment>
-					}
-				/>
-			</FormControl>
-			{data.length ? (
-				<Grid container spacing={2}>
-					{data.map((product) => (
-						<Grid
-							item
-							key={product.productId}
-							xs={12}
-							sm={6}
-							md={4}
-						>
-							<ProductCard product={product} />
-						</Grid>
-					))}
-				</Grid>
-			) : (
-				<h1>Products are not found</h1>
-			)}
+								<ProductCard
+									product={product}
+									setProductOutlet={setProductOutlet}
+								/>
+							</Grid>
+						))}
+					</Grid>
+				) : (
+					<h1>Products are not found</h1>
+				)}
 
-			<Pagination
-				color="primary"
-				count={totalPages2}
-				page={currentPage}
-				onChange={handleChangePage}
-				variant="outlined"
-				shape="rounded"
-			/>
-		</div>
+				<Pagination
+					color="primary"
+					count={totalPages2}
+					page={currentPage}
+					onChange={handleChangePage}
+					variant="outlined"
+					shape="rounded"
+				/>
+			</div>
+			<Outlet context={{ productOutlet }} />
+		</>
 	);
 };

@@ -105,6 +105,13 @@ export interface IScheduleData {
 	product: IProductData;
 }
 
+export interface ICreateScheduleData {
+	time: 'morning' | 'evening';
+	description?: string;
+	productId: number;
+	patientId?: number
+}
+
 export interface IResponseWithMessageData{
 	message: string;
 }

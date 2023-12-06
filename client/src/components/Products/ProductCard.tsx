@@ -19,11 +19,18 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 interface ProductCardProps {
 	product: IProductData;
+	setProductOutlet: (productId: IProductData) => void;
 }
 
-export const ProductCard: FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: FC<ProductCardProps> = ({ product, setProductOutlet }) => {
 	const navigate = useNavigate();
 	const role = useRole();
+
+	const handleCreateSchedule = () => {
+		setProductOutlet(product);
+		navigate('createSchedule');
+	};
+
 	return (
 		<Card sx={{ width: 345 }}>
 			<CardMedia
@@ -61,7 +68,10 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
 				</Button>
 				<Box>
 					{(role === Role.DOCTOR || role === Role.PATIENT) && (
-						<IconButton aria-label="add to schedule">
+						<IconButton
+							aria-label="add to schedule"
+							onClick={handleCreateSchedule}
+						>
 							<AddOutlinedIcon />
 						</IconButton>
 					)}

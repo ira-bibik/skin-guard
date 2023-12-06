@@ -17,6 +17,7 @@ import Doctor, { doctorLoader } from '../pages/Doctor';
 import Patient, { patientLoader } from '../pages/Patient';
 import EditProfile from '../pages/EditProfile';
 import CreateRequest from '../pages/CreateRequest';
+import { CreateSchedule } from '../pages/CreateSchedule';
 
 export const router = createBrowserRouter([
 	{
@@ -98,6 +99,12 @@ export const router = createBrowserRouter([
 				path: 'products/*',
 				element: <Products />,
 				loader: productsLoader,
+				children: [
+					{
+						path: 'createSchedule',
+						element: <CreateSchedule />,
+					},
+				],
 			},
 			{
 				path: 'products/:productId',

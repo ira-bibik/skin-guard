@@ -2,11 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import { IResponseUserData, IUser } from '../../types/types';
-import {
-	parseJwt,
-	removeTokenFromLocalStorage,
-	setTokenToLocalStorage,
-} from '../../helper/localstorage.helper';
+import { parseJwt } from '../../helper/localstorage.helper';
 
 interface UserState {
 	user: IUser | null;
