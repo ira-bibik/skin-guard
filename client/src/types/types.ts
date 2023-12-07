@@ -112,6 +112,11 @@ export interface ICreateScheduleData {
 	patientId?: number
 }
 
+export interface IEditScheduleData {
+	time?: 'morning' | 'evening';
+	description?: string;
+}
+
 export interface IResponseWithMessageData{
 	message: string;
 }

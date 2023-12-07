@@ -81,13 +81,6 @@ const Header: FC = () => {
 								</Link>
 							</MenuItem>
 						)}
-						{role === 'patient' && (
-							<MenuItem onClick={handleClose}>
-								<Link to={`me/schedule`} className="menuItem">
-									<p>Schedule</p>
-								</Link>
-							</MenuItem>
-						)}
 						{role === 'doctor' && (
 							<>
 								<MenuItem onClick={handleClose}>

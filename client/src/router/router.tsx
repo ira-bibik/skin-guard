@@ -6,7 +6,6 @@ import Users from '../pages/Users';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile, { profileLoader } from '../pages/Profile';
-import Schedule from '../pages/Schedule';
 import Patients, { ownPatientsLoader } from '../pages/Patients';
 import Requests, { OwnDoctorsRequestsLoader } from '../pages/Requests';
 import Doctors, { doctorsLoader } from '../pages/Doctors';
@@ -49,10 +48,6 @@ export const router = createBrowserRouter([
 				],
 			},
 			{
-				path: 'me/schedule',
-				element: <Schedule />,
-			},
-			{
 				path: 'me/patients',
 				element: <Patients />,
 				loader: ownPatientsLoader,
@@ -61,10 +56,6 @@ export const router = createBrowserRouter([
 				path: 'me/patients/:patientId',
 				element: <Patient />,
 				loader: patientLoader,
-			},
-			{
-				path: 'me/patients/:patientId/schedule',
-				element: <Schedule />,
 			},
 			{
 				path: 'me/requests',

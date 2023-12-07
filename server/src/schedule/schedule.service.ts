@@ -150,6 +150,7 @@ export class ScheduleService {
 				product: { productId: updatedSchedule.product.productId },
 				patient: { patientId: updatedSchedule.patient.patientId },
 				time: updatedSchedule.time,
+				description: updatedSchedule.description
 			},
 		});
 		if (isScheduleExist) {
