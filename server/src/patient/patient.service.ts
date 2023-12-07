@@ -109,9 +109,9 @@ export class PatientService {
 		}
 	}
 
-	async update(id: number, dto: UpdatePatientDto) {
+	async update(id: string, dto: UpdatePatientDto) {
 		const patient = await this.patientRepository.findOne({
-			where: { patientId: id },
+			where: { patientId: +id },
 		});
 		if (!patient) throw new NotFoundException("This patient doesn't exist");
 		const filteredDto: FilterPatientDto = {};
@@ -120,7 +120,7 @@ export class PatientService {
 				filteredDto[key] = dto[key];
 			}
 		}
-		await this.patientRepository.update(id, filteredDto);
+		await this.patientRepository.update(+id, filteredDto);
 		return { message: 'Patient was succesfully updated' };
 	}
 

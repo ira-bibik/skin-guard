@@ -23,7 +23,7 @@ import { RolesGuard } from '../user/guards/roles.guard';
 import { JwtAuthGuard } from '../user/guards/jwt-auth.guard';
 import { ScheduleService } from '../schedule/schedule.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UserRole } from '../types/types';
+import { UpdateSkinType, UserRole } from '../types/types';
 import { MqttService } from './mqtt.service';
 
 @Controller('users/patients')
@@ -57,10 +57,23 @@ export class PatientController {
 		);
 	}
 
-	@Get('topic')
-	getTopic(): string {
-		const data = this.mqttService.publish('NewTopiс/SkinGuard/123', 'Hello world');
-		console.log(data);
+	@Get('updateSkinType')
+	updateSkinType(
+		@Query('id') patientId: string,
+		@Query('skinType') skinType: string
+	) {
+		return this.patientService.update(patientId, {
+			skinType,
+		});
+	}
+
+	@Get('getSkinType')
+	@Roles(UserRole.PATIENT)
+	@UseGuards(RolesGuard)
+	getSkinType(@Request() req): string {
+		const id = req.user.idByRole;
+		this.mqttService.publish(id.toString());
+		// const data = this.mqttService.publish(req.headers.authorization.split(' ')[1]);
 		return 'Published';
 	}
 

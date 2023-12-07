@@ -39,3 +39,7 @@ export interface FilterProductDto {
 	skinType?: string[];
 	description?: string;
 }
+export interface UpdateSkinType {
+	patientId: string;
+	skinType: string;
+}
