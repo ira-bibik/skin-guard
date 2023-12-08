@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as mqtt from 'mqtt';
 import { PatientService } from './patient.service';
 import { UpdatePatientDto } from './dto/update-patient.dto';
-import { Console } from 'console';
 
 @Injectable()
 export class MqttService {
@@ -13,7 +12,10 @@ export class MqttService {
 
 		this.client.on('connect', () => {
 			console.log('Connected to MQTT broker');
+			this.client.subscribe('NewTopic/SkinGuard/skinType/receive');
 		});
+
+		
 
 		this.client.on('error', (error) => {
 			console.error('MQTT connection error:', error);
@@ -21,18 +23,10 @@ export class MqttService {
 	}
 
 	publish(id: string): void {
-		// const data = this.client.subscribe(
-		// 	'NewTopic/SkinGuard/skinType/receive',
-		// 	function onSubscribe(err, granted) {
-		// 		if (err) {
-		// 			console.log('subscribe errors:', err);
-		// 		}
-		// 		if (granted) {
-		// 			console.log('subscribe granted:', granted);
-		// 		}
-		// 	}
-		// );
 		this.client.publish('NewTopic/SkinGuard/skinType', id);
+		this.client.on('message', (topic, message) => {
+			this.updateSkinType(id, message.toString());
+		});
 	}
 
 	updateSkinType(patientd: string, type: string) {
