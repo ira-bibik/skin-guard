@@ -32,10 +32,10 @@ export const DoctorService = {
 		return data;
 	},
 
-	async editProfile(chabgedData: IEditDoctorData) {
+	async editProfile(changedData: IEditDoctorData) {
 		const { data } = await instance.patch<IResponseWithMessageData>(
 			'users/doctors',
-			chabgedData
+			changedData
 		);
 		return data;
 	},

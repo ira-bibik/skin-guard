@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import Home from '../pages/Home';
 import ErrorPage from '../pages/ErrorPage';
-import Users from '../pages/Users';
+import Users, { usersLoader } from '../pages/Users';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile, { profileLoader } from '../pages/Profile';
@@ -65,6 +65,7 @@ export const router = createBrowserRouter([
 			{
 				path: 'users/*',
 				element: <Users />,
+				loader: usersLoader,
 			},
 			{
 				path: 'users/:userId',

@@ -132,5 +132,24 @@ export interface IRequestData {
 	patient: IPatientData;
 }
 
+export interface IUserData {
+	userId: number;
+	email: string;
+	password: string;
+	role: Role;
+	createAt: string;
+}
 
+export interface IUsersResponseData {
+	users: IUserData[];
+	totalPages: number;
+	currentPage: number;
+}
 
+// {
+//     "userId": 1,
+//     "email": "admin@gmail.com",
+//     "password": "$argon2id$v=19$m=65536,t=3,p=4$BEB92j0S/ZMqrFG4OD+gJA$wzG+5vahNItSlNwRibsip7XIGI1/fjtYNOC4YUtKZ28",
+//     "role": "admin",
+//     "createAt": "2023-10-22T06:44:41.674Z"
+// }
