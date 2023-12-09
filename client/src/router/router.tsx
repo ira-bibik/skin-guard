@@ -17,6 +17,8 @@ import Patient, { patientLoader } from '../pages/Patient';
 import EditProfile from '../pages/EditProfile';
 import CreateRequest from '../pages/CreateRequest';
 import { CreateSchedule } from '../pages/CreateSchedule';
+import { CreateProduct } from '../pages/CreateProduct';
+import { EditProduct, productLoader } from '../pages/EditProduct';
 
 export const router = createBrowserRouter([
 	{
@@ -101,6 +103,16 @@ export const router = createBrowserRouter([
 			{
 				path: 'products/:productId',
 				element: <Product />,
+				loader: productLoader,
+			},
+			{
+				path: 'products/:productId/edit',
+				element: <EditProduct />,
+				loader: productLoader,
+			},
+			{
+				path: 'products/create',
+				element: <CreateProduct />,
 			},
 		],
 	},

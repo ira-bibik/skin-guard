@@ -1,5 +1,10 @@
 import { instance } from '../api/axios.api';
-import { IProductsResponseData } from '../types/types';
+import {
+	IManageProductData,
+	IProductData,
+	IProductsResponseData,
+	IResponseWithMessageData,
+} from '../types/types';
 
 interface getAllProductsParams {
 	page: number;
@@ -23,6 +28,36 @@ export const ProductService = {
 		const { data } = await instance.get<IProductsResponseData>('product', {
 			params,
 		});
+		return data;
+	},
+
+	async getProductById(productId: string | undefined): Promise<IProductData> {
+		const { data } = await instance.get<IProductData>(
+			`product/${productId}`
+		);
+		return data;
+	},
+
+	async createProduct(productData: IManageProductData) {
+		const { data } = await instance.post(`product`, productData);
+		return data;
+	},
+
+	async editProduct(
+		productId: number,
+		productData: IManageProductData
+	): Promise<IResponseWithMessageData> {
+		const { data } = await instance.patch<IResponseWithMessageData>(
+			`product/${productId}`,
+			productData
+		);
+		return data;
+	},
+
+	async deleteProduct(productId: number): Promise<IResponseWithMessageData> {
+		const { data } = await instance.delete<IResponseWithMessageData>(
+			`product/${productId}`
+		);
 		return data;
 	},
 };

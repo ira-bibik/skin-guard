@@ -102,6 +102,7 @@ export const ProductsTable: FC = () => {
 								<ProductCard
 									product={product}
 									setProductOutlet={setProductOutlet}
+									setProductsList={setData}
 								/>
 							</Grid>
 						))}

@@ -3,25 +3,25 @@ import { IsArray, IsOptional, IsString, Length, MaxLength, MinLength } from "cla
 export class UpdateProductDto {
 	@IsOptional()
 	@IsString({ message: 'Name must be a string' })
-	@Length(5, 100, {
+	@Length(3, 100, {
 		message:
-			'Name must be not less than 5 characters and not bigger than 100 characters',
+			'Name must be not less than 3 characters and not bigger than 100 characters',
 	})
 	readonly name: string;
 
 	@IsOptional()
 	@IsString({ message: 'Product type must be a string' })
-	@Length(5, 50, {
+	@Length(3, 50, {
 		message:
-			'Product type must be not less than 5 characters and not bigger than 50 characters',
+			'Product type must be not less than 3 characters and not bigger than 50 characters',
 	})
 	readonly productType: string;
 
 	@IsOptional()
 	@IsString({ message: 'Brand must be a string' })
-	@Length(5, 50, {
+	@Length(3, 50, {
 		message:
-			'Brand must be not less than 5 characters and not bigger than 50 characters',
+			'Brand must be not less than 3 characters and not bigger than 50 characters',
 	})
 	readonly brand: string;
 

@@ -44,6 +44,16 @@ export interface IProductData {
 	photo?: string; 
 }
 
+export interface IManageProductData {
+	name: string;
+	productType: string;
+	brand: string;
+	ingredients: string;
+	skinType: string[];
+	description?: string;
+	amount: string;
+}
+
 export interface IProductsResponseData {
 	products: IProductData[];
 	totalPages: number;
