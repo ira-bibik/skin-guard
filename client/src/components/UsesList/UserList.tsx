@@ -16,8 +16,12 @@ import { formatDate } from '../../helper/date.helper';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { toast } from 'react-toastify';
 
-export const UserList: FC = () => {
-	const { users, totalPages } = useLoaderData() as IUsersResponseData;
+interface UserListProps {
+	users: IUserData[];
+	totalPages: number;
+}
+
+export const UserList: FC<UserListProps> = ({ users, totalPages }) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [usersListData, setUsersListData] = useState<IUserData[]>(users);
 	const [currentPage, setCurrentPage] = useState<number>(

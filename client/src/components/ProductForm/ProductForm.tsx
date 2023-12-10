@@ -35,7 +35,7 @@ export const ProductForm: FC<ProductFormProps> = ({
 		try {
 			const productManageValues: IManageProductData = {
 				...values,
-				skinType: values.skinType.split(', '),
+				skinType: values.skinType.trim().split(','),
 			};
 			handleSubmit(productManageValues);
 			navigate(-1);
