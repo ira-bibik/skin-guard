@@ -44,8 +44,8 @@ export class ProductController {
 	async uploadFile(
 		@UploadedFile(new ParseFilePipe({
 			validators: [
-				new MaxFileSizeValidator({ maxSize: 1000 }),
-				new FileTypeValidator({fileType: 'image/jpeg'})
+				// new MaxFileSizeValidator({ maxSize: 1000 }),
+				// new FileTypeValidator({fileType: 'image/jpeg'})
 			] }))
 		file: Express.Multer.File,
 		@Param('id') id: string

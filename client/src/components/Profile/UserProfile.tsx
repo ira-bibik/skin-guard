@@ -9,6 +9,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { IconButton } from '@mui/material';
 import { Schedule } from './Schedule';
 
+
 export interface UserProfileProps {
 	actionsButtons?: boolean;
 	isScheduleVisible?: boolean;

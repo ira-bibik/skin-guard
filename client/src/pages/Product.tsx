@@ -1,25 +1,62 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import '../components/Products/Products.css';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { IProductData, Role } from '../types/types';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useRole } from '../hooks/getRole';
+import { getRole } from '../helper/getRole.helper';
+import { ProductService } from '../services/ProductService';
+import { toast } from 'react-toastify';
 
 const Product: FC = () => {
 	const productData = useLoaderData() as IProductData;
 	const navigate = useNavigate();
 	const role = useRole();
+	const [productPhoto, setProductPhoto] = useState(productData.photo);
+
+	const getFileFromUser = async (userFile: any) => {
+		try {
+			const role = getRole();
+			if (userFile.target.files.length && role) {
+				const data = await ProductService.uploadPhoto(
+					userFile.target.files[0],
+					productData.productId
+				);
+				setProductPhoto(data.photo);
+				toast.success('The photo is uploaded');
+			}
+		} catch (err: any) {
+			const error = err.response?.data.message;
+			toast.error(error);
+		}
+	};
+
 	return (
 		<div className="productConatiner">
-			<img
-				src={
-					productData.photo ||
-					'https://t4.ftcdn.net/jpg/00/89/55/15/360_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg'
-				}
-				alt="product photo"
-				className="productPhoto"
-			/>
+			<div className="photoBlock">
+				<img
+					src={
+						productPhoto ||
+						'https://t4.ftcdn.net/jpg/00/89/55/15/360_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg'
+					}
+					alt="product photo"
+					className="productPhoto"
+				/>
+				{role === Role.ADMIN && (
+					<Tooltip title={`Change photo`}>
+						<label htmlFor="productPhoto" className="photoInput">
+							<input
+								id="productPhoto"
+								type={'file'}
+								onChange={(file) => getFileFromUser(file)}
+								style={{ display: 'none' }}
+							/>
+							<EditOutlinedIcon />
+						</label>
+					</Tooltip>
+				)}
+			</div>
 			<div className="mainInfo">
 				<Typography variant="h4">{productData.name}</Typography>
 				<div className="mainInfoDoubleItem">

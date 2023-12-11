@@ -66,4 +66,20 @@ export const AuthService = {
 		);
 		return data;
 	},
+
+	async uploadPhoto(photo: any, role: Role) {
+		const formData = new FormData();
+		formData.append('file', photo);
+
+		const { data } = await instance.post(
+			`users/${role}s/uploadPhoto`,
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			}
+		);
+		return data;
+	},
 };

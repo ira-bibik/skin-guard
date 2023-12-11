@@ -10,7 +10,6 @@ import Patients, { ownPatientsLoader } from '../pages/Patients';
 import Requests, { OwnDoctorsRequestsLoader } from '../pages/Requests';
 import Doctors, { doctorsLoader } from '../pages/Doctors';
 import Products, { productsLoader } from '../pages/Products';
-import UserPage from '../pages/UserPage';
 import Product from '../pages/Product';
 import Doctor, { doctorLoader } from '../pages/Doctor';
 import Patient, { patientLoader } from '../pages/Patient';
@@ -68,10 +67,6 @@ export const router = createBrowserRouter([
 				path: 'users/*',
 				element: <Users />,
 				loader: usersLoader,
-			},
-			{
-				path: 'users/:userId',
-				element: <UserPage />,
 			},
 			{
 				path: 'doctors',

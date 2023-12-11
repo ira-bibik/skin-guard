@@ -83,13 +83,7 @@ export const UserList: FC<UserListProps> = ({ users, totalPages }) => {
 					<TableBody>
 						{usersListData.map((user) => (
 							<TableRow key={user.userId}>
-								<TableCell
-									align="left"
-									className="navigationLink"
-									onClick={() => navigate(`${user.userId}`)}
-								>
-									{user.email}
-								</TableCell>
+								<TableCell align="left">{user.email}</TableCell>
 								<TableCell align="left">{user.role}</TableCell>
 								<TableCell align="left">
 									{formatDate(user.createAt)}

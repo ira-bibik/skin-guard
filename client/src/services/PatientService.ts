@@ -1,5 +1,9 @@
 import { instance } from '../api/axios.api';
-import { IEditPatientData, IPatientData, IResponseWithMessageData } from '../types/types';
+import {
+	IEditPatientData,
+	IPatientData,
+	IResponseWithMessageData,
+} from '../types/types';
 
 export const PatientService = {
 	async findById(patientId: string | undefined) {

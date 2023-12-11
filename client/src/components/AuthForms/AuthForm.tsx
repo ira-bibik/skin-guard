@@ -37,7 +37,7 @@ export const AuthForm: FC<AuthFormProps> = (props) => {
 						? 'You logged in.'
 						: 'Account has been created.'
 				);
-				navigate('/');
+				navigate('/products');
 			}
 		} catch (err: any) {
 			const error = err.response?.data.message;

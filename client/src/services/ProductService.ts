@@ -60,4 +60,20 @@ export const ProductService = {
 		);
 		return data;
 	},
+
+	async uploadPhoto(photo: any, productId: number) {
+		const formData = new FormData();
+		formData.append('file', photo);
+
+		const { data } = await instance.post(
+			`product/upload/${productId}`,
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			}
+		);
+		return data;
+	},
 };

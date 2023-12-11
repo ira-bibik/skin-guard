@@ -11,6 +11,16 @@
 	gap: 50px;
 }
 
+.photoBlock {
+	position: relative;
+}
+
+.photoInput {
+	position: absolute;
+	bottom: 10px;
+	right: 15px;
+}
+
 .avatar {
 	width: 200px;
 	height: 200px;
