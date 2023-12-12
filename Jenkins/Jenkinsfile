@@ -5,6 +5,12 @@ pipeline {
   buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
   }
   stages {
+    stage {
+      steps {
+        sh 'docker system prune --all'
+        sh 'rm /opt/data/*'
+      }
+    }
     stage('Build Frontend') {
       steps{
         dir ('client/') {
