@@ -17,7 +17,7 @@ pipeline {
         }
       }
     }
-    stage('Nginx') {
+    stage('Deploy to stage') {
       steps {
         dir ('docker/') {
           sh 'docker compose up -d'
