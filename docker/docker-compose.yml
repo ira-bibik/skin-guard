@@ -3,12 +3,13 @@ services:
   front:
     image: front
     volumes:
-      - "/opt/data:/build"
+      - "/opt/nginx/"
+      - "/opt/nginx/data:/build"
 
 
 
   web:
-    image: nginx:stable-alpine3.17
+    image: nginx
     ports:
      - "80:80"
     volumes:
