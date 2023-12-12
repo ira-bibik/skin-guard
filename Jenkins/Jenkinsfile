@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('clean') {
       steps {
-        sh 'docker system prune --all'
+        sh 'echo y | docker system prune --all'
         sh 'rm /opt/data/*'
       }
     }
