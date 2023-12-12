@@ -1,19 +1,21 @@
 
-
 pipeline {
   agent any
   options {disableConcurrentBuilds()}
   stages {
     stage('Build Frontend') {
       steps{
-        dir ('docker/toolbox') {
-
-          sh 'docker build -t front:v01 '
-
+        dir ('client/') {
+          sh 'docker build -t front . '
         }
       }
     }
-
+    stage('Build Backend') {
+      steps{
+        dir ('server/') {
+          sh 'docker build -t back .'  
+        }
+      }
+    }  
   }
-
 }
