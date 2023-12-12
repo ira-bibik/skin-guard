@@ -1,0 +1,19 @@
+
+
+pipeline {
+  agent any
+  options {disableConcurrentBuilds()}
+  stages {
+    stage('Build Frontend') {
+      steps{
+        dir ('docker/toolbox') {
+
+          sh 'docker build -t front:v01 '
+
+        }
+      }
+    }
+
+  }
+
+}
