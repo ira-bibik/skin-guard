@@ -23,7 +23,6 @@ pipeline {
         dir ('docker/') {
           sh 'docker compose up -d'
         }
-        sh 'echo y | docker system prune --all'
       }
     }  
   }
