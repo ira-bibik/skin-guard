@@ -26,6 +26,14 @@ pipeline {
         }
       }
     }  
+    stage("remove all") {
+      input {
+        message 'delete'
+        parameters { booleanParam defaultValue: true, name: 'confirm' }
+      sh "echo y | docker system prune --all"
+      sh 'rm /opt/data/*'
+      }
+    }
   }
 }
 
