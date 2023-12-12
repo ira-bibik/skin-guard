@@ -4,12 +4,6 @@ pipeline {
   options {
   buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
   }
-  stages {
-    stage {
-      steps{
-        sh 'docker compose stop && docker compose rm'
-      }
-    }
     stage('Build Frontend') {
       steps{
         dir ('client/') {
