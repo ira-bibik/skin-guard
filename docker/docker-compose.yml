@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  front:
+    image: front
+    volumes:
+      - "/opt/nginx/data:/build"
+
+
+
+  web:
+    image: nginx
+    ports:
+     - "80:80"
+    volumes:
+     - "/opt/data:/usr/share/nginx/html"
+    depends_on:
+     - front
+  

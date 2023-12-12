@@ -1,0 +1,29 @@
+
+pipeline {
+  agent any
+  options {
+  buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
+  }
+    stage('Build Frontend') {
+      steps{
+        dir ('client/') {
+          sh 'docker build -t front . '
+        }
+      }
+    }
+    stage('Build Backend') {
+      steps{
+        dir ('server/') {
+          sh 'docker build -t back .'  
+        }
+      }
+    }
+    stage('Deploy to stage') {
+      steps {
+        dir ('docker/') {
+          sh 'docker compose up -d'
+        }
+      }
+    }  
+  }
+}
