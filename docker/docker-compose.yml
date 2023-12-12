@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   front:
-    build: ../client/
+    image: front
     volumes:
       - "/opt/nginx/"
       - "/opt/nginx/data:/build"
