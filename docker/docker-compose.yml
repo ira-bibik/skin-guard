@@ -12,7 +12,7 @@ services:
     ports:
      - "80:80"
     volumes:
-     - "/opt/data:/var/www/html"
+     - "/opt/data:/usr/share/nginx/html"
     depends_on:
      - front
   
