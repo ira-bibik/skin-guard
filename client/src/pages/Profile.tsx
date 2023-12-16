@@ -8,9 +8,9 @@ import { Outlet, useLoaderData } from 'react-router-dom';
 
 export const profileLoader = async () => {
 	try {
+
 		const role = getRole();
 		const data = await AuthService.getProfile(role);
-
 		return data;
 	} catch (err: any) {
 		const error = err.response?.data.message;
@@ -21,6 +21,7 @@ export const profileLoader = async () => {
 const Profile: FC = () => {
 	const role = getRole();
 	const data = useLoaderData() as IPatientData | IDoctorData;
+	const [userData, setUserData] = useState(data);
 
 	return (
 		<>
@@ -28,8 +29,9 @@ const Profile: FC = () => {
 				actionsButtons={true}
 				isScheduleVisible={role === Role.PATIENT}
 				role={role}
+				data={userData}
 			/>
-			<Outlet context={{ data, role }} />
+			<Outlet context={{ data: userData, role, setUserData }} />
 		</>
 	);
 };

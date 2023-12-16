@@ -1,4 +1,5 @@
 import { instance } from '../api/axios.api';
+import { getTokenFromLocalStorage } from '../helper/localstorage.helper';
 import {
 	IDoctorData,
 	ILoginUserData,
@@ -35,9 +36,14 @@ export const AuthService = {
 	async getProfile(
 		role: Role | undefined
 	): Promise<IPatientData | IDoctorData | undefined> {
+		const token = getTokenFromLocalStorage();
 		const { data } = await instance.get<
 			IPatientData | IDoctorData | undefined
-		>(`users/${role}s/me`);
+		>(`users/${role}s/me`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		return data;
 	},
 

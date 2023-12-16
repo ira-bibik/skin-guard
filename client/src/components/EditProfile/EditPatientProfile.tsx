@@ -10,9 +10,13 @@ import { PatientValidationSchema } from './patientValidation';
 
 interface EditPatientProfileProps {
 	data: IPatientData;
+	setData: (values: any) => void;
 }
 
-export const EditPatientProfile: FC<EditPatientProfileProps> = ({ data }) => {
+export const EditPatientProfile: FC<EditPatientProfileProps> = ({
+	data,
+	setData,
+}) => {
 	let initialEditData: IEditPatientData = {
 		name: data.name || '',
 		age: data.age,
@@ -24,6 +28,7 @@ export const EditPatientProfile: FC<EditPatientProfileProps> = ({ data }) => {
 	const editPatient = async (values: IEditPatientData) => {
 		try {
 			const data = await PatientService.editProfile(values);
+			setData((state: any) => ({ ...state, ...values }));
 			toast.success(data.message);
 			navigate('/me');
 		} catch (err: any) {

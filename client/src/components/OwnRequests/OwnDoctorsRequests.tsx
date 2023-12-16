@@ -7,7 +7,6 @@ import OwnDoctorsRequestsItem from './OwnDoctorsRequestsItem';
 
 export const OwnDoctorsRequests: FC = () => {
 	const requestsFromLoader = useLoaderData() as IRequestData[];
-	console.log(requestsFromLoader);
 	const [requests, setRequests] =
 		useState<IRequestData[]>(requestsFromLoader);
 	return (

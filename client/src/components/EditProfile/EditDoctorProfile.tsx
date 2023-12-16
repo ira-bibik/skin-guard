@@ -10,9 +10,10 @@ import { Button, TextField } from '@mui/material';
 
 interface EditDoctorProfileProps {
 	data: IDoctorData;
+	setData: (values: any) => void;
 }
 
-export const EditDoctorProfile: FC<EditDoctorProfileProps> = ({ data }) => {
+export const EditDoctorProfile: FC<EditDoctorProfileProps> = ({ data, setData }) => {
 	let initialEditData: IEditDoctorData = {
 		name: data.name || '',
 		work: data.work || '',
@@ -24,6 +25,7 @@ export const EditDoctorProfile: FC<EditDoctorProfileProps> = ({ data }) => {
 	const editDoctor = async (values: IEditDoctorData) => {
 		try {
 			const data = await DoctorService.editProfile(values);
+			setData((state: any) => ({ ...state, ...values }));
 			toast.success(data.message);
 			navigate('/me');
 		} catch (err: any) {

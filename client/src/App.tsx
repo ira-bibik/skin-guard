@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import {
 	getTokenFromLocalStorage,
 	parseJwt,
+	setTokenToLocalStorage,
 } from './helper/localstorage.helper';
 import { AuthService } from './services/AuthService';
 import { useAppDispatch } from './store/hooks';
@@ -19,7 +20,7 @@ const App: FC = () => {
 		const token = getTokenFromLocalStorage();
 		try {
 			if (token) {
-				// const role = getRole();
+				setTokenToLocalStorage(token);
 				const { role, userId } = parseJwt(token);
 				let adminData;
 				let userData;

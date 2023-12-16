@@ -12,6 +12,7 @@ import '../components/EditProfile/EditProfile.css';
 interface IEditProfileOutletContext {
 	data: IPatientData | IDoctorData;
 	role: Role;
+	setUserData: (values: any) => void;
 }
 
 const EditProfile: FC = () => {
@@ -28,9 +29,15 @@ const EditProfile: FC = () => {
 	return (
 		<Dialog open={open} onClose={handleClose} scroll="paper">
 			{context.role === Role.DOCTOR ? (
-				<EditDoctorProfile data={context.data as IDoctorData} />
+				<EditDoctorProfile
+					data={context.data as IDoctorData}
+					setData={context.setUserData}
+				/>
 			) : (
-				<EditPatientProfile data={context.data as IPatientData} />
+				<EditPatientProfile
+					data={context.data as IPatientData}
+					setData={context.setUserData}
+				/>
 			)}
 			<CloseIcon className="closeIcon" onClick={handleClose} />
 		</Dialog>
