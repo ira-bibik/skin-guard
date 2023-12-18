@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ProductService } from '../services/ProductService';
 import { IManageProductData, IProductData } from '../types/types';
@@ -16,6 +16,7 @@ export const productLoader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export const EditProduct: FC = () => {
+	const navigate = useNavigate();
     const product = useLoaderData() as IProductData;
 
 	const editProduct = async (values: IManageProductData) => {
@@ -26,6 +27,7 @@ export const EditProduct: FC = () => {
             );
             
 			toast.success(data.message);
+			navigate(-1);
 		} catch (err: any) {
 			const error = err.response?.data.message;
 			toast.error(error);

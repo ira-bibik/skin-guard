@@ -9,9 +9,13 @@ import { AuthService } from '../../services/AuthService';
 
 export interface PhotoBlockProps {
 	photo: string | undefined;
+	actionsButtons: boolean;
 }
 
-export const PhotoBlock: FC<PhotoBlockProps> = ({ photo }) => {
+export const PhotoBlock: FC<PhotoBlockProps> = ({
+	photo,
+	actionsButtons = false,
+}) => {
 	const [userPhoto, setUserPhoto] = useState(photo);
 
 	const getFileFromUser = async (userFile: any) => {
@@ -41,17 +45,19 @@ export const PhotoBlock: FC<PhotoBlockProps> = ({ photo }) => {
 				alt="icon"
 				className="avatar"
 			/>
-			<Tooltip title={`Change photo`}>
-				<label htmlFor="avatar" className="photoInput">
-					<input
-						id="avatar"
-						type={'file'}
-						onChange={(file) => getFileFromUser(file)}
-						style={{ display: 'none' }}
-					/>
-					<EditOutlinedIcon />
-				</label>
-			</Tooltip>
+			{actionsButtons && (
+				<Tooltip title={`Change photo`}>
+					<label htmlFor="avatar" className="photoInput">
+						<input
+							id="avatar"
+							type={'file'}
+							onChange={(file) => getFileFromUser(file)}
+							style={{ display: 'none' }}
+						/>
+						<EditOutlinedIcon />
+					</label>
+				</Tooltip>
+			)}
 		</div>
 	);
 };

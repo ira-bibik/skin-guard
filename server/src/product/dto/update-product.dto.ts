@@ -51,7 +51,7 @@ export class UpdateProductDto {
 
 	@IsOptional()
 	@IsString({ message: 'Description must be a string' })
-	@MaxLength(100, {
+	@MaxLength(1000, {
 		message: 'Max length should be less than 1000 characters',
 	})
 	readonly description?: string;

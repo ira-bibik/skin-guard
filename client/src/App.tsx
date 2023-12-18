@@ -16,14 +16,16 @@ import { Role } from './types/types';
 const App: FC = () => {
 	const dispatch = useAppDispatch();
 
+	// This function checks if the user is authenticated after page reloading
 	const checkAuth = async () => {
 		const token = getTokenFromLocalStorage();
 		try {
 			if (token) {
+				// Update the token in localStorage if it's still valid
 				setTokenToLocalStorage(token);
 				const { role, userId } = parseJwt(token);
-				let adminData;
-				let userData;
+				// Depending on the user's role, fetch additional data.
+				let adminData, userData;
 				if (role === Role.ADMIN) {
 					adminData = await AuthService.getUserById(userId);
 				} else {

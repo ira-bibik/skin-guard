@@ -26,7 +26,10 @@ export const UserProfile: FC<UserProfileProps> = ({
 	return (
 		<>
 			<div className="profileContainer">
-				<PhotoBlock photo={data.photo} />
+				<PhotoBlock
+					photo={data.photo}
+					actionsButtons={actionsButtons}
+				/>
 				<div className="infoBlock">
 					{role === Role.PATIENT && (
 						<PatientInfo

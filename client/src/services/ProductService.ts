@@ -16,7 +16,7 @@ export const ProductService = {
 	async getAllProducts(
 		page: number = 1,
 		search?: string,
-		limit: number = 3
+		limit: number = 6
 	): Promise<IProductsResponseData> {
 		const params: getAllProductsParams = {
 			page,
