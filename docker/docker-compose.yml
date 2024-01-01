@@ -5,7 +5,7 @@ services:
     env_file:
       - /opt/jenkins/client_env
     volumes:
-      - "data:/build"
+      - "/opt/data:/build"
 
   back:
     image: back:latest
@@ -22,7 +22,7 @@ services:
     ports:
      - "80:80"
     volumes:
-     - "data:/usr/share/nginx/html"
+     - "/opt/data:/usr/share/nginx/html"
     depends_on:
      - front
      - back
