@@ -3,14 +3,14 @@ services:
   front:
     image: front:latest
     env_file:
-      - env_file
+      - /opt/jenkins/env_file
     volumes:
       - "data:/build"
 
   back:
     image: back:latest
     env_file:
-      - env_file
+      - /opt/jenkins/env_file
     ports:
       - "3001:3001"
     command: npm run start
@@ -24,3 +24,11 @@ services:
     depends_on:
      - front
      - back
+     - db
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD: postgres
+      - POSTGRES_USER: postgres
+      - POSTGRES_DB: skinguard
