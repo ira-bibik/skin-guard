@@ -14,7 +14,7 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - db
+      - postgres
     command: npm run start
 
   web:
@@ -26,13 +26,13 @@ services:
     depends_on:
      - front
      - back
-     - db
+     - postgres
 
-  db:
+  postgres:
     image: postgres:13.3
     environment:
-      - POSTGRES_PASSWORD: "postgres"
-      - POSTGRES_USER: "postgres"
-      - POSTGRES_DB: "skinguard"
+      POSTGRES_DB: "habrdb"
+      POSTGRES_USER: "habrpguser"
+      POSTGRES_PASSWORD: "pgpwd4habr"
     ports:
       - "5432:5432"
