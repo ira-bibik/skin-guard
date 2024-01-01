@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import {
 	getTokenFromLocalStorage,
 	parseJwt,
+	setTokenToLocalStorage,
 } from './helper/localstorage.helper';
 import { AuthService } from './services/AuthService';
 import { useAppDispatch } from './store/hooks';
@@ -15,14 +16,16 @@ import { Role } from './types/types';
 const App: FC = () => {
 	const dispatch = useAppDispatch();
 
+	// This function checks if the user is authenticated after page reloading
 	const checkAuth = async () => {
 		const token = getTokenFromLocalStorage();
 		try {
 			if (token) {
-				// const role = getRole();
+				// Update the token in localStorage if it's still valid
+				setTokenToLocalStorage(token);
 				const { role, userId } = parseJwt(token);
-				let adminData;
-				let userData;
+				// Depending on the user's role, fetch additional data.
+				let adminData, userData;
 				if (role === Role.ADMIN) {
 					adminData = await AuthService.getUserById(userId);
 				} else {

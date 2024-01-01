@@ -37,7 +37,7 @@ const Header: FC = () => {
 	return (
 		<header className="headerContainer">
 			{/* LOGO */}
-			<Link to={'/'} className="logo">
+			<Link to={'/products'} className="logo">
 				SkinGuard
 			</Link>
 			{/* NAVBAR */}

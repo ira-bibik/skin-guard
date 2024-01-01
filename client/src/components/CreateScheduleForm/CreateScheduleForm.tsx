@@ -52,7 +52,6 @@ export const CreateScheduleForm: FC<CreateScheduleFormProps> = ({
 				values.patientId = userIdByRole;
 			}
 			const data = await ScheduleService.createSchedule(values);
-			console.log(data);
 			toast.success('Schedule is created!');
 			navigate(-1);
 		} catch (err: any) {

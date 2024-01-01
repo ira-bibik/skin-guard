@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { DoctorService } from '../services/DoctorService';
@@ -16,7 +16,8 @@ export const doctorLoader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 const Doctor: FC = () => {
-	return <UserProfile role={Role.DOCTOR} />;
+	const data = useLoaderData() as IDoctorData;
+	return <UserProfile role={Role.DOCTOR} data={data} />;
 };
 
 export default Doctor;

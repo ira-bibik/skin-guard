@@ -19,7 +19,7 @@ export const ProductForm: FC<ProductFormProps> = ({
 	handleSubmit,
 	type,
 }) => {
-	const navigate = useNavigate();
+	
 
 	const initialProductValues = {
 		name: initialValues?.name || '',
@@ -38,7 +38,6 @@ export const ProductForm: FC<ProductFormProps> = ({
 				skinType: values.skinType.trim().split(','),
 			};
 			handleSubmit(productManageValues);
-			navigate(-1);
 		} catch (err: any) {
 			const error = err.response?.data.message;
 			toast.error(error);

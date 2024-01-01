@@ -1,7 +1,6 @@
 .authPageContainer {
 	width: 500px;
 	margin: 50px auto;
-	border: 1px solid var(--primary);
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
@@ -13,8 +12,9 @@
 	-moz-box-shadow: 8px 8px 60px -27px rgba(0, 0, 0, 0.88);
 }
 
-.formTitle {
+.authPageContainer .formTitle {
 	font-size: 30px;
+	font-weight: 700;
 }
 
 .formContainer {

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
 import { PatientService } from '../services/PatientService';
 import { toast } from 'react-toastify';
@@ -17,7 +17,7 @@ export const patientLoader = async ({ params }: LoaderFunctionArgs) => {
 
 const Patient: FC = () => {
 	const data = useLoaderData() as IPatientData;
-	return <UserProfile isScheduleVisible={Boolean(data.schedule?.length)} role={Role.PATIENT} />;;
+	return <UserProfile isScheduleVisible={Boolean(data.schedule?.length)} role={Role.PATIENT} data={ data} />;;
 };
 
 export default Patient;

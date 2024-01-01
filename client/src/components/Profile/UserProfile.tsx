@@ -9,27 +9,33 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { IconButton } from '@mui/material';
 import { Schedule } from './Schedule';
 
-
 export interface UserProfileProps {
 	actionsButtons?: boolean;
 	isScheduleVisible?: boolean;
 	role: Role;
+	data: IPatientData | IDoctorData;
 }
 
 export const UserProfile: FC<UserProfileProps> = ({
 	actionsButtons = false,
 	isScheduleVisible = false,
 	role,
+	data,
 }) => {
-	const data = useLoaderData() as IPatientData | IDoctorData;
 	const navigate = useNavigate();
 	return (
 		<>
 			<div className="profileContainer">
-				<PhotoBlock photo={data.photo} />
+				<PhotoBlock
+					photo={data.photo}
+					actionsButtons={actionsButtons}
+				/>
 				<div className="infoBlock">
 					{role === Role.PATIENT && (
-						<PatientInfo {...(data as IPatientData)} actionsButtons={actionsButtons} />
+						<PatientInfo
+							{...(data as IPatientData)}
+							actionsButtons={actionsButtons}
+						/>
 					)}
 					{role === Role.DOCTOR && (
 						<DoctorInfo {...(data as IDoctorData)} />

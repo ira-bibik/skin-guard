@@ -3,6 +3,7 @@
 /server/node_modules
 /server/.env
 /server/.backup.sql
+/client/.env
 
 # Logs
 logs
