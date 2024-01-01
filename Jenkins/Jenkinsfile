@@ -22,7 +22,7 @@ pipeline {
     stage('Deploy to stage') {
       steps {
         dir ('docker') {
-          sh 'docker compose up '
+          sh 'docker compose up -d'
         }
       }
     }  
