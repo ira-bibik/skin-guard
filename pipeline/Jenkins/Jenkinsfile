@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    stages {
+        stage('Test') {
+            steps {
+                sh "echo secceful"
+            }
+        }
+        stage('Build front') {
+            steps {
+                dir('pipeline/Docker/front') {
+                    sh "docker built -t static:latest ."
+                }
+            }
+        }
+        stage('Build back') {
+            steps {
+                dir('pipeline/Docker/back') {
+                    sh "docker build -t back:latest ."
+                }
+            }
+        }
+        stege('Deploy to stage') {
+            steps {
+                dir('pipeline/Docker/copmose')
+                    sh "docker compose up ."
+            }
+        }
+        
+
+
+    }
+
+}
