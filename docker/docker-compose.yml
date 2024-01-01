@@ -5,7 +5,7 @@ services:
     env_file:
       - /opt/jenkins/client_env
     volumes:
-      - /opt/data:/build
+      - web-data:/build
 
   back:
     image: back:latest
@@ -22,7 +22,7 @@ services:
     ports:
      - "80:80"
     volumes:
-     - /opt/data:/usr/share/nginx/html
+     - web-data:/usr/share/nginx/html
     depends_on:
      - front
      - back
@@ -36,3 +36,6 @@ services:
       POSTGRES_PASSWORD: "serhii"
     ports:
       - "5432:5432"
+      
+volumes:
+  web-data:
