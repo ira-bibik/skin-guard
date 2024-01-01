@@ -5,24 +5,24 @@ pipeline {
   buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
   }
   stages {
-    stage('Build Frontend') {
+    stage('Build static') {
       steps{
-        dir ('client/') {
-          sh 'docker build -t front . '
+        dir ('client') {
+          sh 'docker build -t front:latest . '
         }
       }
     }
-    stage('Build Backend') {
+    stage('Build backend') {
       steps{
-        dir ('server/') {
-          sh 'docker build -t back .'  
+        dir ('server') {
+          sh 'docker build -t back:latest .'  
         }
       }
     }
     stage('Deploy to stage') {
       steps {
-        dir ('docker/') {
-          sh 'docker compose up -d'
+        dir ('docker') {
+          sh 'docker compose up '
         }
       }
     }  

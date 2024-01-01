@@ -1,18 +1,26 @@
 version: "3.8"
 services:
   front:
-    image: front
+    image: front:latest
+    env_file:
+      - env_file
     volumes:
-      - "/opt/nginx/data:/build"
+      - "data:/build"
 
-
+  back:
+    image: back:latest
+    env_file:
+      - env_file
+    ports:
+      - "3001:3001"
+    command: npm run start
 
   web:
     image: nginx
     ports:
      - "80:80"
     volumes:
-     - "/opt/nginx/data:/usr/share/nginx/html"
+     - "data:/usr/share/nginx/html"
     depends_on:
      - front
-  
+     - back
