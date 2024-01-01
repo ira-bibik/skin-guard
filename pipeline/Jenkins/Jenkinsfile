@@ -6,9 +6,23 @@ pipeline {
                 sh "echo secceful"
             }
         }
-        stege('Build static and back') {
+        stage('Build front') {
             steps {
-                dir('skin-guard/pipeline/Docker/front_back')
+                dir('pipeline/Docker/build/front') {
+                    sh "docker built -t static:latest ."
+                }
+            }
+        }
+        stage('Build back') {
+            steps {
+                dir('pipeline/Docker/build/back') {
+                    sh "docker build -t back:latest ."
+                }
+            }
+        }
+        stege('Deploy to stage') {
+            steps {
+                dir('skin-guard/pipeline/Docker/compose')
                     sh "docker compose up ."
             }
         }
