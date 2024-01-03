@@ -1,5 +1,5 @@
 FROM node:20-alpine
-RUN adduser -h /home/jenkins -s /bin/bash jenkins
+RUN adduser -u 109 -h /home/jenkins jenkins
 USER jenkins
 WORKDIR /home/jenkins
 COPY . .
