@@ -6,11 +6,6 @@ pipeline {
     disableConcurrentBuilds()
   }
   stages {
-    stage('Delete workspace before build starts') {
-      steps {
-        deleteDir()
-      }
-    }
     stage('Test') {
       steps {
         sh 'echo "test is seccesful"'
