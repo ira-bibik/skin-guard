@@ -14,7 +14,7 @@ pipeline {
       steps{
         dir ('client') {
           sh 'docker build -t front:latest . '
-          sh 'docker run --rm --name static --env-file /opt/jenkins/client_env -v ./date:/build -d front:latest '
+          sh 'docker run --rm --name static --env-file /opt/jenkins/client_env -v ./build:/build -d front:latest '
         }
       }
     }
@@ -22,7 +22,7 @@ pipeline {
       steps{
         dir ('server') {
           sh 'docker build -t back:latest .'  
-          sh 'docker run --rm --name back --env-file /opt/jenkins/server_env -v ./date:/dist -d back:latest '
+          sh 'docker run --rm --name back --env-file /opt/jenkins/server_env -v ./dist:/dist -d back:latest '
         }
       }
     }
