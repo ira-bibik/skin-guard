@@ -1,4 +1,5 @@
 FROM node:20-alpine
-COPY . ./
+RUN mkdir /client
+COPY . ./client/
 RUN npm ci
 ENTRYPOINT [ "npm","run","build"]
