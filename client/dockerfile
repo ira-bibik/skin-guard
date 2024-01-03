@@ -3,6 +3,6 @@ RUN addgroup -g 115 jenkins \
     && adduser -u 109 -G jenkins -s /bin/sh -D jenkins
 USER jenkins
 WORKDIR /home/jenkins
-COPY . .
+COPY . ./
 RUN npm ci
 ENTRYPOINT [ "npm","run","build"]
