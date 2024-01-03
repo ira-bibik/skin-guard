@@ -1,5 +1,5 @@
 FROM node:20-alpine
-RUN adduser jenkins
+RUN useradd -ms /bin/bash jenkins
 USER jenkins
 COPY . .
 RUN npm ci
