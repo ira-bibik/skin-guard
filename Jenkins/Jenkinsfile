@@ -24,8 +24,8 @@ pipeline {
       steps{
         dir ('server') {
           sh 'docker build -t back:01 . '  
-          sh 'docker run  -v ./build:/server/dist  back:01 '
-          //sh 'docker rmi back:01'
+          sh 'docker run --rm -v ./build:/server/dist  back:01 '
+          sh 'docker rmi back:01'
         }
       }
     }
