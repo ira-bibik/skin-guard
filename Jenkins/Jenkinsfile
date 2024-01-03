@@ -23,7 +23,7 @@ pipeline {
     stage('Build backend') {
       steps{
         dir ('server') {
-          sh 'docker build -t back:01 .'  
+          sh 'docker build -t back:01 . '  
           sh 'docker run --rm  --env-file /opt/jenkins/server_env -v ./dist:/dist back:01 '
           sh 'docker rmi back:01'
         }
