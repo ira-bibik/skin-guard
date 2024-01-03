@@ -1,11 +1,5 @@
 version: "3.9"
 services:
-  front:
-    image: front:latest
-    env_file:
-      - /opt/jenkins/client_env
-    volumes:
-      - web-data:/build
 
   back:
     image: back:latest
