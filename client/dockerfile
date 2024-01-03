@@ -1,6 +1,7 @@
 FROM node:20-alpine
-RUN useradd -ms /bin/bash jenkins
+RUN adduser -h /home/jenkins -s /bin/bash jenkins
 USER jenkins
+WORKDIR /home/jenkins
 COPY . .
 RUN npm ci
 ENTRYPOINT [ "npm","run","build"]
