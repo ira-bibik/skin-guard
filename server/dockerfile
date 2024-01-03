@@ -1,4 +1,6 @@
 FROM node:20-alpine
-COPY . .
-RUN npm ci
+RUN mkdir /server
+COPY . /server/
+WORKDIR /server
+RUN npm ci 
 CMD [ "npm","run","build" ]
