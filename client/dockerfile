@@ -1,6 +1,6 @@
 FROM node:20-alpine
 RUN addgroup -g 115 jenkins \
-    && adduser -u 109 -G jenkins -s /bin/sh -D jenkins
+    && adduser -u 109 -h /home/jenkins -G jenkins -s /bin/sh -D jenkins
 USER jenkins
 WORKDIR /home/jenkins
 COPY . ./
