@@ -11,7 +11,7 @@ pipeline {
         sh 'echo "test is seccesful"'
       }
     }
-    stage('Build static') {
+    stage('Build web') {
       steps{
         dir ('client') {
           sh 'docker build -t front:01 . '
@@ -24,7 +24,7 @@ pipeline {
       steps{
         dir ('server') {
           sh 'docker build -t back:01 . '  
-          sh 'docker run --rm  --env-file /opt/jenkins/server_env -v ./dist:/dist back:01 '
+          sh 'docker run --rm  --env-file /opt/jenkins/server_env  back:01 '
           sh 'docker rmi back:01'
         }
       }
