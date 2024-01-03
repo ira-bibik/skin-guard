@@ -20,24 +20,6 @@ pipeline {
         }
       }
     }
-    stage('Build backend') {
-      steps{
-        dir ('server') {
-          sh 'docker build -t back:01 . '  
-          sh 'docker run --rm -v ./build:/server/dist  back:01 '
-          sh 'docker rmi back:01'
-        }
-      }
-    }
-/*
-    stage('Deploy to stage') {
-      steps {
-        dir ('docker') {
-          sh 'docker compose up -d'
-        }
-      }
-    } 
-    */
   }
 }
 
