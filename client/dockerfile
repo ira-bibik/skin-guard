@@ -1,5 +1,4 @@
 FROM node:20-alpine
-USER jenkins
 COPY . .
 RUN npm i
 ENTRYPOINT [ "npm","run","build"]
