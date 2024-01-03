@@ -1,4 +1,4 @@
 FROM node:20-alpine
-COPY . .
+COPY . ./
 RUN npm ci
 CMD [ "npm","run","build" ]
