@@ -1,0 +1,41 @@
+.authPageContainer {
+	width: 500px;
+	margin: 50px auto;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+	padding: 15px;
+	box-shadow: 8px 8px 60px -27px rgba(0, 0, 0, 0.88);
+	-webkit-box-shadow: 8px 8px 60px -27px rgba(0, 0, 0, 0.88);
+	-moz-box-shadow: 8px 8px 60px -27px rgba(0, 0, 0, 0.88);
+}
+
+.authPageContainer .formTitle {
+	font-size: 30px;
+	font-weight: 700;
+}
+
+.formContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+	width: 90%;
+}
+
+.formContainer .logInButton {
+	font-size: 18px;
+	width: 200px;
+	height: 50px;
+}
+
+.formLink {
+	color: darkblue;
+}
+
+.formLink:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}

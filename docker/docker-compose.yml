@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+
+  back:
+    image: back:latest
+    env_file:
+      - /opt/jenkins/server_env
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    command: npm run start
+
+  web:
+    image: nginx
+    ports:
+     - "80:80"
+    volumes:
+     - web-data:/usr/share/nginx/html
+    depends_on:
+     - front
+     - back
+     - postgres
+
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "test"
+      POSTGRES_USER: "serhii"
+      POSTGRES_PASSWORD: "serhii"
+    ports:
+      - "5432:5432"
+      
+volumes:
+  web-data:

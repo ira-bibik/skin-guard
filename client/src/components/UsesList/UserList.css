@@ -1,0 +1,53 @@
+.usersGrid {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 90%;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+}
+
+.navigationLink:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.usersGrid .tableHead {
+	font-weight: 700;
+}
+
+.databaseActionContainer {
+	display: flex;
+	gap: 15px;
+	margin-top: 25px;
+}
+
+.databaseActionContainer button {
+	width: 250px;
+	text-transform: none;
+	border-radius: 10px;
+}
+
+.databaseActionContainer .backupButton {
+	color: white;
+	background-color: rgb(73, 180, 73);
+	border-color: rgb(41, 105, 41);
+}
+
+.databaseActionContainer .backupButton:hover {
+	background-color: rgb(206, 239, 206);
+	color: rgb(73, 180, 73);
+	border-color: rgb(73, 180, 73);
+}
+.databaseActionContainer .restoreButton {
+	color: white;
+	background-color: rgb(73, 180, 73);
+	border-color: rgb(41, 105, 41);
+}
+
+.databaseActionContainer .restoreButton:hover {
+	background-color: rgb(206, 239, 206);
+	color: rgb(73, 180, 73);
+	border-color: rgb(73, 180, 73);
+}

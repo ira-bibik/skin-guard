@@ -1,0 +1,52 @@
+.productsGrid {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 80%;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+}
+
+.productCardContent {
+	display: flex;
+	justify-content: space-between;
+}
+
+.cardActionButtons {
+	justify-content: space-between;
+}
+
+.productConatiner {
+	width: 80%;
+	display: flex;
+	align-items: center;
+	margin-top: 25px;
+	gap: 50px;
+	position: relative;
+}
+
+.productPhoto {
+	width: 460px;
+	height: 460px;
+	border-radius: 10%;
+	object-fit: cover;
+	border: 1px solid black;
+}
+
+.mainInfo {
+	display: flex;
+	gap: 20px;
+	flex-direction: column;
+}
+
+.mainInfoDoubleItem {
+	display: flex;
+	width: 300px;
+	justify-content: space-between;
+}
+
+.productConatiner .editButton {
+	position: absolute;
+	top: 25px;
+}

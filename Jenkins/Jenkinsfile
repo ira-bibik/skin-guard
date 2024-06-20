@@ -1,0 +1,26 @@
+
+pipeline {
+  agent any
+  options {
+    buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
+    disableConcurrentBuilds()
+  }
+  stages {
+    stage('Test') {
+      steps {
+        sh 'echo "test is seccesful"'
+      }
+    }
+    stage('Build web') {
+      steps{
+        dir ('client') {
+          sh 'docker build -t front:01 . '
+          sh 'docker run --rm  -v ./build:/client/build  front:01 '
+          sh 'docker rmi front:01'
+        }
+      }
+    }
+  }
+}
+
+

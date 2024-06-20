@@ -1,0 +1,60 @@
+.doctorsGrid {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 90%;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+}
+
+.doctorBlock {
+	border-radius: 10px;
+	box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.25);
+	padding: 50px;
+	display: flex;
+	align-items: center;
+	gap: 25px;
+	position: relative;
+}
+
+.doctorAvatar {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.doctorAvatar:hover {
+	cursor: pointer;
+}
+
+.doctorBlock .addButton {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+}
+
+.createRequestForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+	width: 500px;
+    margin: 50px;
+}
+
+.createRequestForm .sendButton {
+    width: 250px;
+    text-transform: none;
+	border-radius: 10px;
+	color: white;
+	background-color: rgb(73, 180, 73);
+	border-color: rgb(41, 105, 41);
+}
+
+.createRequestForm .sendButton:hover {
+    background-color: white;
+	color: rgb(73, 180, 73);
+	border-color: rgb(73, 180, 73);
+}

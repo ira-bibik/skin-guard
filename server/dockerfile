@@ -1,0 +1,6 @@
+FROM node:20-alpine
+RUN mkdir /server
+COPY . /server/
+WORKDIR /server
+RUN npm i 
+ENTRYPOINT [ "npm","run","build" ]
